@@ -1,0 +1,348 @@
+body {
+      margin: 0;
+      font-family: 'Poppins', Arial, sans-serif; /* Ensure Poppins is the primary font */
+    }
+
+    h2 {
+      color: #FF8000; /* Apply the orange color to all h2 elements */
+      font-weight: bold; /* Make h2 bold */
+    }
+
+    h3 {
+      font-weight: bold; /* Make h3 bold globally */
+    }
+
+    .top-bar {
+      background: #e0e0e0;
+      text-align: left;
+      padding: 5px 0;
+      font-size: 10px;
+      padding-left: 2%;
+    }
+
+    .top-bar a {
+      color: #000000;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+
+
+    .header-container {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 15px 20px;
+      background: white;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .social-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .social-section span {
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .social-section img {
+      width: 24px;
+      height: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .header-container {
+        justify-content: center;
+        padding: 10px;
+      }
+    }
+
+    .header-container2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background: #ff8000;
+      color: white;
+      font-weight: bold; /* Make text inside this container bold */
+    }
+
+    .header-container2 .logo img {
+      height: 40px;
+    }
+
+    .header-container2 nav {
+      display: flex;
+      align-items: center;
+    }
+
+    .header-container2 nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header-container2 nav ul li {
+      display: inline;
+    }
+
+    .header-container2 nav ul li a {
+      color: white;
+      text-decoration: none;
+      /* font-weight: bold; */ /* Inherits from parent now */
+    }
+
+    .nav-categories {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+      background: #fff;
+    }
+
+    .nav-categories a {
+      padding: 10px 32px;
+      width: 220px;
+      font-weight: bold;
+      font-family: 'Poppins', Arial, sans-serif;
+    }
+
+    .nav-categories button {
+      background: #f2f2f2;
+      border: none;
+      padding: 10px 32px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #ff8400;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.3s, color 0.3s;
+      width: 220px;
+      line-height: 1.5;
+    }
+
+    .nav-categories button.active {
+      background: #ff8400;
+      color: white;
+    }
+
+    .nav-categories button:hover {
+      background: #e0e0e0;
+    }
+
+    .content {
+      width: 60%;
+      margin: 20px auto;
+      text-align: justify;
+    }
+
+    .content p {
+      line-height: 1.8;
+      /* Aumenta el espacio entre líneas */
+      font-size: 16px;
+      /* Ajusta el tamaño de fuente si es necesario */
+      color: #15212f;
+    }
+
+    .content img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 20px auto;
+    }
+
+    @media (max-width: 768px) {
+      .header-container2 {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .nav-categories {
+        flex-wrap: wrap;
+      }
+
+      .content {
+        width: 90%;
+      }
+    }
+
+    .button-container {
+      text-align: center;
+      margin: 30px;
+    }
+
+    .info-btn {
+      background: #ff8000;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .info-btn:hover {
+      background: #e06b00;
+    }
+
+    .bottom-section {
+      background: #f1f1f1;
+      padding: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .bottom-links {
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+      gap: 30px 60px;
+    }
+
+    .bottom-links a {
+      text-decoration: none;
+      color: black;
+    }
+
+    .bottom-logo img {
+      width: 110px;
+      height: auto;
+    }
+
+    @media (max-width: 768px) {
+      .content {
+        width: 90%;
+      }
+    }
+
+    .footer {
+      background: #ff8000;
+      /* Color de fondo naranja */
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .footer-logo img {
+      height: 90px;
+      margin-bottom: 10px;
+      padding-bottom: 4%;
+      padding-top: 2%;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      justify-content: flex-start;
+      /* Alinea a la izquierda */
+      flex: 1;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .footer-links span {
+      color: white;
+      font-size: 14px;
+    }
+
+
+    .footer-social {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: flex-end;
+      /* Alinea a la derecha */
+      flex: 1;
+    }
+
+    .footer-social span {
+      font-size: 14px;
+      font-weight: bold;
+
+    }
+
+    @media (max-width: 768px) {
+      .content {
+        width: 90%;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .footer-links {
+        justify-content: center;
+        margin-bottom: 10px;
+      }
+
+      .footer-social {
+        justify-content: center;
+      }
+    }
+
+    .footer-social img {
+      width: 30px;
+      height: 30px;
+    }
+
+    .search-icon {
+      margin-left: 20px;
+    }
+
+    .search-icon img {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Leaflet Map Styles */
+    .leaflet-container {
+      height: 700px; /* Updated height */
+      width: 80%;
+      margin: 20px auto; /* Center the map */
+    }
+
+    .info {
+      padding: 6px 8px;
+      font: 14px/16px Arial, Helvetica, sans-serif;
+      background: white;
+      background: rgba(255,255,255,0.8);
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      border-radius: 5px;
+    }
+    .info h4 {
+      margin: 0 0 5px;
+      color: #777;
+    }
+    .legend {
+      line-height: 18px;
+      color: #555;
+    }
+    .legend i {
+      width: 18px;
+      height: 18px;
+      float: left;
+      margin-right: 8px;
+      opacity: 0.7;
+    }
