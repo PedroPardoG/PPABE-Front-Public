@@ -17,4 +17,5 @@ COPY . .
 EXPOSE 7073
 
 # Ejecuta el comando "npm run dev" para iniciar la aplicación
-CMD ["npm", "run", "dev", "--host"]
+CMD ["npm", "run", "dev", "--", "--host"]
+
