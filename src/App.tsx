@@ -14,7 +14,7 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <Container >
+    <Container maxWidth="false">
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
