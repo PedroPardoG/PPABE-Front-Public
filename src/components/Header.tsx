@@ -15,7 +15,7 @@ const menuItems = [
   // { text: "Datos Agregados", path: "/datos-agregados" }, // Removed Datos Agregados
   { text: "Preguntas Frecuentes", path: "/faq" },
   { text: "Protección de Datos", path: "/proteccion-datos" },
-  { text: "Documentos", path: "/documentos" },
+  { text: "Enlaces de Interés", path: "/documentos" },
   { text: "Contacto", path: "/contacto" }
 ];
 
