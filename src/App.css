@@ -1,1 +1,41 @@
 
+/* En tu archivo CSS */
+
+/* Estilo base para el cuadro de información */
+.leaflet-control.info {
+    /* Tamaño de letra (el que ya te gustó) */
+    font-size: 1.8em;
+  
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+  
+    /* --- AJUSTE DE ALTURA DE LÍNEA --- */
+    /* Añade o ajusta esta propiedad para dar más espacio vertical entre líneas */
+    line-height: 1.4; /* <--- ¡AJUSTA ESTE VALOR! Prueba con 1.3, 1.5, 1.6 */
+  
+  }
+  
+  /* Estilo específico para el título H4 dentro del cuadro */
+  .leaflet-control.info h4 {
+    margin: 0 0 8px 0;
+    color: #555;
+    font-weight: bold;
+    /* El H4 también heredará el line-height general. Si quieres uno diferente para él: */
+    /* line-height: 1.2; */ /* (Descomenta y ajusta si es necesario) */
+  }
+  
+  /* Ya no necesitamos la regla específica para 'br' si aplicamos line-height general */
+  /*
+  .leaflet-control.info br {
+      line-height: 1.6;
+  }
+  */
+
+/* Estilos para los cuadritos de color (<i>) DENTRO de la leyenda */
+.leaflet-control.info.legend i {
+  width: 16px;         /* Ancho del cuadrito de color */
+  height: 28px;        /* Alto del cuadrito de color */
+}
+
