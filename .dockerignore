@@ -1,7 +1,10 @@
 node_modules
-.git
-.env
-dist
 build
-.vscode
-*.log
+dist
+.dockerignore
+Dockerfile
+docker-compose.yml
+.env
+.git
+.gitignore
+README.md
