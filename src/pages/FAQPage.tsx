@@ -3,20 +3,21 @@ import { Box, Typography } from '@mui/material';
 
 const FAQPage: React.FC = () => {
   return (
-    <Box sx={{ mt: 4, mb: 4, px: { xs: 2, sm: 4, md: 6 } }}> {/* Responsive padding */}
+    <Box sx={{ mt: 4, mb: 4, px: { xs: 2, sm: 4, md: 6 } }}>
       <section id="faq">
+        {/* H2 controlado por theme */}
         <Typography
           variant="h2"
           component="h2"
           gutterBottom
           align="center"
-          sx={{ mb: 3 }} // Styles inherited from global CSS
+          sx={{ mb: 3 }}
         >
           Preguntas Frecuentes (FAQ)
         </Typography>
 
-        <Box className="subsection" sx={{ mb: 4 }}>
-          <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
             ¿Qué información puedo consultar en este portal?
           </Typography>
           <Typography paragraph>
@@ -24,8 +25,8 @@ const FAQPage: React.FC = () => {
           </Typography>
         </Box>
 
-        <Box className="subsection" sx={{ mb: 4 }}>
-          <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
             ¿Puedo ver nombres de beneficiarios?
           </Typography>
           <Typography paragraph>
@@ -33,8 +34,8 @@ const FAQPage: React.FC = () => {
           </Typography>
         </Box>
 
-        <Box className="subsection" sx={{ mb: 4 }}>
-          <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
             ¿Cada cuánto tiempo se actualiza el padrón?
           </Typography>
           <Typography paragraph>
@@ -42,8 +43,8 @@ const FAQPage: React.FC = () => {
           </Typography>
         </Box>
 
-        <Box className="subsection" sx={{ mb: 4 }}>
-          <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
             ¿Puedo descargar los datos?
           </Typography>
           <Typography paragraph>
@@ -51,8 +52,8 @@ const FAQPage: React.FC = () => {
           </Typography>
         </Box>
 
-        <Box className="subsection" sx={{ mb: 4 }}>
-          <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
             ¿Puedo reportar errores o inconsistencias?
           </Typography>
           <Typography paragraph>
@@ -60,8 +61,8 @@ const FAQPage: React.FC = () => {
           </Typography>
         </Box>
 
-        <Box className="subsection" sx={{ mb: 4 }}>
-          <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
             ¿Qué protección tienen los datos personales?
           </Typography>
           <Typography paragraph>

@@ -3,26 +3,26 @@ import { Box, Typography, List, ListItem, ListItemText } from '@mui/material';
 
 const MarcoJuridicoPage: React.FC = () => {
   return (
-    <Box sx={{ mt: 4, mb: 4, px: { xs: 2, sm: 4, md: 6 } }}> {/* Responsive padding */}
+    <Box sx={{ mt: 4, mb: 4, px: { xs: 2, sm: 4, md: 6 } }}>
       <section id="marco">
-        {/* Use Typography with component="h2". Styles are now global from index.css */}
+        {/* H2 controlado por el theme (sin sx.fontSize) */}
         <Typography
           variant="h2"
           component="h2"
           gutterBottom
           align="center"
-          sx={{ mb: 3 }} // Removed color and font-weight, now global
+          sx={{ mb: 3 }}
         >
           Marco Jurídico – Padrón de Beneficiarios de Nuevo León
         </Typography>
 
-        <Typography paragraph sx={{ mb: 3 }}> {/* Add bottom margin */}
+        <Typography paragraph sx={{ mb: 3 }}>
           El Padrón de Beneficiarios del Estado de Nuevo León está sustentado por un conjunto de normas legales y principios constitucionales que garantizan su existencia, funcionamiento y publicación como instrumento de transparencia, eficiencia administrativa y equidad social. Este marco normativo asegura que la gestión de los programas sociales se realice con base en el interés público, la no discriminación y el uso responsable de los recursos públicos.
         </Typography>
 
-        <Box className="subsection" sx={{ mb: 4 }}> {/* Add bottom margin */}
-          {/* Use Typography with component="h3". Styles are now global from index.css */}
-          <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}> {/* Keep bold here or rely on global */}
+        <Box sx={{ mb: 4 }}>
+          {/* Subtítulo como H3 para que el theme gobierne tamaños */}
+          <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
             1. Constitución Política de los Estados Unidos Mexicanos
           </Typography>
           <Typography paragraph>
@@ -33,11 +33,11 @@ const MarcoJuridicoPage: React.FC = () => {
           </Typography>
         </Box>
 
-        <Box className="subsection" sx={{ mb: 4 }}> {/* Add bottom margin */}
-          <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}> {/* Keep bold here or rely on global */}
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
             2. Ley de Desarrollo Social para el Estado de Nuevo León
           </Typography>
-          <List sx={{ listStyleType: 'disc', pl: 4 }}> {/* Use List for proper semantics */}
+          <List sx={{ listStyleType: 'disc', pl: 4 }}>
             <ListItem sx={{ display: 'list-item', p: 0, mb: 1 }}>
               <ListItemText primary={
                 <>
@@ -60,13 +60,13 @@ const MarcoJuridicoPage: React.FC = () => {
               } />
             </ListItem>
           </List>
-          <Typography paragraph sx={{ mt: 2 }}> {/* Add top margin */}
+          <Typography paragraph sx={{ mt: 2 }}>
             Esta ley es el pilar jurídico principal del Padrón de Beneficiarios en Nuevo León, y legitima su publicación como mecanismo de gobernanza social.
           </Typography>
         </Box>
 
-        <Box className="subsection" sx={{ mb: 4 }}> {/* Add bottom margin */}
-          <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}> {/* Keep bold here or rely on global */}
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
             3. Ley de Transparencia y Acceso a la Información Pública del Estado de Nuevo León
           </Typography>
           <List sx={{ listStyleType: 'disc', pl: 4 }}>
@@ -76,7 +76,7 @@ const MarcoJuridicoPage: React.FC = () => {
                   <strong>Artículo 95, Fracción XVI, Inciso p):</strong> Obliga a los sujetos obligados (dependencias estatales) a publicar información detallada sobre los beneficiarios de subsidios, apoyos o estímulos. Esto incluye:
                 </>
               } />
-              <List sx={{ listStyleType: 'circle', pl: 4, mt: 1 }}> {/* Nested list */}
+              <List sx={{ listStyleType: 'circle', pl: 4, mt: 1 }}>
                 <ListItem sx={{ display: 'list-item', p: 0 }}><ListItemText primary="Nombre de la persona física o moral beneficiaria." /></ListItem>
                 <ListItem sx={{ display: 'list-item', p: 0 }}><ListItemText primary="Tipo y monto del apoyo recibido." /></ListItem>
                 <ListItem sx={{ display: 'list-item', p: 0 }}><ListItemText primary="Unidad territorial (ubicación)." /></ListItem>
@@ -91,13 +91,13 @@ const MarcoJuridicoPage: React.FC = () => {
               } />
             </ListItem>
           </List>
-          <Typography paragraph sx={{ mt: 2 }}> {/* Add top margin */}
+          <Typography paragraph sx={{ mt: 2 }}>
             Esta ley garantiza que el padrón sea accesible a cualquier persona, sin necesidad de justificar su interés, promoviendo la participación y la fiscalización ciudadana.
           </Typography>
         </Box>
 
-        <Box className="subsection" sx={{ mb: 4 }}> {/* Add bottom margin */}
-          <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}> {/* Keep bold here or rely on global */}
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
             4. Decreto de Creación del SIIPB-NL y Manual de Operaciones
           </Typography>
           <Typography paragraph>
@@ -108,8 +108,8 @@ const MarcoJuridicoPage: React.FC = () => {
           </Typography>
         </Box>
 
-        <Box className="subsection" sx={{ mb: 4 }}> {/* Add bottom margin */}
-          <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}> {/* Keep bold here or rely on global */}
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
             5. Ley General de Desarrollo Social (Federal)
           </Typography>
           <List sx={{ listStyleType: 'disc', pl: 4 }}>
@@ -118,13 +118,13 @@ const MarcoJuridicoPage: React.FC = () => {
             <ListItem sx={{ display: 'list-item', p: 0, mb: 1 }}><ListItemText primary={<><strong>Artículo 10:</strong> Reconoce el derecho de los beneficiarios a la privacidad de sus datos personales, reforzando el equilibrio entre transparencia y protección de datos.</>} /></ListItem>
             <ListItem sx={{ display: 'list-item', p: 0, mb: 1 }}><ListItemText primary={<><strong>Artículo 27:</strong> Define el Padrón de Beneficiarios como una herramienta fundamental para garantizar la eficacia y control de los programas sociales.</>} /></ListItem>
           </List>
-          <Typography paragraph sx={{ mt: 2 }}> {/* Add top margin */}
+          <Typography paragraph sx={{ mt: 2 }}>
             Esta ley ofrece el contexto normativo a nivel nacional y complementa las obligaciones estatales de transparencia y focalización del gasto social.
           </Typography>
         </Box>
 
-        <Box className="subsection" sx={{ mb: 4 }}> {/* Add bottom margin */}
-          <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}> {/* Keep bold here or rely on global */}
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
             6. Principios Normativos y Éticos Vinculados
           </Typography>
           <Typography paragraph>
@@ -137,7 +137,7 @@ const MarcoJuridicoPage: React.FC = () => {
           </List>
         </Box>
 
-        <Box className="subsection note" sx={{ borderLeft: '4px solid #FF8000', pl: 2, fontStyle: 'italic', mb: 4 }}> {/* Add note styling and bottom margin */}
+        <Box sx={{ borderLeft: '4px solid #FF8000', pl: 2, fontStyle: 'italic', mb: 4 }}>
           <Typography paragraph>
             <strong>En conjunto:</strong> este marco jurídico robustece la legitimidad del portal, define claramente los datos que deben ser públicos, y establece obligaciones precisas para garantizar el derecho ciudadano a conocer cómo se ejerce el gasto social del estado.
           </Typography>
@@ -145,13 +145,13 @@ const MarcoJuridicoPage: React.FC = () => {
       </section>
 
       {/* --- NEW SECTION --- */}
-      <Box component="section" id="objetivo" sx={{ mt: 6 }}> {/* Add top margin to separate sections */}
+      <Box component="section" id="objetivo" sx={{ mt: 6 }}>
         <Typography
           variant="h2"
           component="h2"
           gutterBottom
           align="center"
-          sx={{ mb: 3 }} // Styles inherited from global CSS
+          sx={{ mb: 3 }}
         >
           Objetivo y Justificación del Portal
         </Typography>
@@ -164,8 +164,8 @@ const MarcoJuridicoPage: React.FC = () => {
           Este portal no solo cumple una función informativa, sino que actúa como una herramienta esencial de rendición de cuentas, control público, evaluación de impacto y diseño de política pública. Contribuye a que las y los ciudadanos conozcan en qué se están utilizando los recursos públicos, quiénes los están recibiendo, en qué cantidades y bajo qué programas, permitiendo así una supervisión ciudadana activa y fundamentada.
         </Typography>
 
-        <Box className="subsection" sx={{ mb: 4 }}>
-          <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
             Objetivos Específicos del Portal
           </Typography>
           <List sx={{ listStyleType: 'disc', pl: 4 }}>
@@ -177,8 +177,8 @@ const MarcoJuridicoPage: React.FC = () => {
           </List>
         </Box>
 
-        <Box className="subsection" sx={{ mb: 4 }}>
-          <Typography variant="h5" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
             Justificación Legal y Ética
           </Typography>
           <Typography paragraph>
@@ -194,7 +194,7 @@ const MarcoJuridicoPage: React.FC = () => {
           </Typography>
         </Box>
 
-        <Box className="subsection note" sx={{ borderLeft: '4px solid #FF8000', pl: 2, fontStyle: 'italic', mb: 4 }}>
+        <Box sx={{ borderLeft: '4px solid #FF8000', pl: 2, fontStyle: 'italic', mb: 4 }}>
           <Typography paragraph>
             <strong>En resumen:</strong> este portal representa un esfuerzo conjunto por modernizar la gestión social, promover el uso legítimo y eficiente de los recursos públicos y empoderar a la ciudadanía con información clara, actualizada y útil para el ejercicio de sus derechos y responsabilidades.
           </Typography>

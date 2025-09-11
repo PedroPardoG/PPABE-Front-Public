@@ -1,93 +1,232 @@
 import React from 'react';
-import { Box, Stack, Typography, Toolbar, Link as MuiLink } from '@mui/material';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import {
+  Box,
+  Stack,
+  Typography,
+  Link as MuiLink,
+  AppBar,
+  IconButton,
+  Container
+} from '@mui/material';
+import { Link } from 'react-router-dom';
 import logoGenlBlanco from '../assets/logo_genl_blanco.svg';
-import logoLeonNL from '../assets/leonnl.svg'; // Import the other logo
-import '../App.css';
+import logoLeonNL from '../assets/leon_nl_blanco.svg';
+import iconFacebook from '../assets/icon-facebook.png';
+import iconInstagram from '../assets/icon-instagram.png';
+import iconTwitter from '../assets/icon-twitter.png';
+import iconTelegram from '../assets/icon-telegram.png';
+import iconTiktok from '../assets/icon-tiktok.png';
+import iconYoutube from '../assets/icon-youtube.png';
+import iconSearch from '../assets/icon-search.png';
 
-// Define menu items with text and path (updated)
 const menuItems = [
   { text: "Consulta el Padrón", path: "/" },
-  { text: "Estadísticas", path: "/estadisticas" },
-  // { text: "Objetivo", path: "/objetivo" }, // Removed Objetivo
   { text: "Marco Jurídico", path: "/marco-juridico" },
   { text: "¿Qué es el Padrón?", path: "/que-es-el-padron" },
-  // { text: "Datos Agregados", path: "/datos-agregados" }, // Removed Datos Agregados
-  { text: "Preguntas Frecuentes", path: "/faq" },
+  { text: "Preguntas Frecuentes", path: "/preguntas-frecuentes" },
   { text: "Protección de Datos", path: "/proteccion-datos" },
-  { text: "Enlaces de Interés", path: "/documentos" },
-  { text: "Contacto", path: "/contacto" }
+  { text: "Enlaces de Interés", path: "/enlaces-interes" }
+];
+
+const socialIcons = [
+  { href: "https://www.facebook.com/gobiernonuevoleon/", src: iconFacebook, alt: "Facebook" },
+  { href: "https://www.instagram.com/nuevoleonmx/", src: iconInstagram, alt: "Instagram" },
+  { href: "https://twitter.com/nuevoleon", src: iconTwitter, alt: "Twitter" },
+  { href: "https://t.me/gobnl", src: iconTelegram, alt: "Telegram" },
+  { href: "https://www.tiktok.com/@nuevonlmx", src: iconTiktok, alt: "TikTok" },
+  { href: "https://www.youtube.com/user/GobiernoNuevoLeon", src: iconYoutube, alt: "YouTube" }
+];
+
+const mainNavLinks = [
+  { href: "https://nl.gob.mx/es/gobierno", text: "Gobierno" },
+  { href: "https://nl.gob.mx/transparencia", text: "Transparencia" },
+  { href: "https://nl.gob.mx/es/nlinea", text: "Trámites y servicios" },
+  { href: "https://www.nuevoleon.travel/", text: "Visita NL" }
 ];
 
 const Header = () => {
+  const containerPadding = {
+    xs: '3vw',
+    sm: '4vw',
+    md: '5vw',
+    lg: '6vw'
+  };
+
+  const containerHeadersPadding = {
+    xs: '3vw',
+    sm: '4vw',
+    md: '6vw',
+    lg: '8vw'
+  };
+
   return (
-    <header>
-      {/* Top Bar */}
-      <div className="top-bar">
-        <p>
-          Este es un sitio web oficial del Gobierno del Estado de Nuevo León.
-          <a href="#">Aprende a identificarlo</a>
-        </p>
-      </div>
-
-      {/* Social Links Bar */}
-      <div className="header-container">
-        <div className="social-section">
-          <span>Síguenos:</span>
-          {/* Add social icons here if needed */}
-        </div>
-      </div>
-
-      {/* Main Header Bar */}
-      <div className="header-container2">
-        <div className="logo">
-          <img src={logoGenlBlanco} alt="Gobierno de Nuevo León" />
-        </div>
-        <nav>
-          <ul>
-            <li><a href="#">Gobierno</a></li>
-            <li><a href="#">Transparencia</a></li>
-            <li><a href="#">Trámites y servicios</a></li>
-            <li><a href="#">Visita NL</a></li>
-          </ul>
-          <a href="#" className="search-icon">
-            {/* Add search icon image here if needed */}
-          </a>
-        </nav>
-      </div>
-
-      {/* Logo and Title Box (Moved from HomePage) */}
-      <Box sx={{ bgcolor: '#FF8400', color: 'white', textAlign: 'center', py: 2, mt: 0 }}> {/* mt changed to 0 */}
-        <Stack direction="column" alignItems="center" justifyContent="center">
-          <img src={logoLeonNL} alt="Logo" style={{ height: '100px' }} />
-          {/* Updated Title */}
-          <Typography variant="h6" fontWeight="bold">Padrón Único de Beneficiarios del Gobierno de Nuevo León</Typography>
-        </Stack>
-      </Box>
-
-      {/* Menu Bar (Moved from HomePage) */}
-      <Box sx={{ bgcolor: '#FF8400', color: 'white', py: 1, mt: 0 }}> {/* mt changed to 0 */}
-        <Toolbar sx={{ justifyContent: 'center', flexWrap: 'wrap' }}>
-          {menuItems.map((item) => (
+    <Box component="header">
+      {/* Barra Gris */}
+      <Box sx={{ bgcolor: '#e0e0e0', py: '5px' }}>
+        <Container maxWidth={false} sx={{ px: containerHeadersPadding }}>
+          <Typography
+            component="p"
+            sx={{
+              color: '#595959',
+              fontSize: '0.8rem',
+              fontWeight: 300,
+              lineHeight: 1.0,
+              fontFamily: "'Poppins', sans-serif",
+              whiteSpace: 'nowrap',
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale',
+              WebkitTextSizeAdjust: 'none', // evita que Safari escale
+              textSizeAdjust: 'none'
+            }}
+          >
+            Este es un sitio web oficial del Gobierno del Estado de Nuevo León.&nbsp;
             <MuiLink
-              key={item.text + item.path} // Ensure key is unique if text might repeat later
-              component={Link}
-              to={item.path}
-              color="inherit"
-              underline="hover"
+              href="#"
               sx={{
-                mx: 1.5,
-                my: 0.5,
-                whiteSpace: 'nowrap',
-                fontWeight: 'bold' // Added bold font weight
+                color: '#000000',
+                textDecoration: 'underline',
+                fontWeight: 500,
+                fontSize: 'inherit',
+                fontFamily: 'inherit'
               }}
             >
-              {item.text}
+              Aprende a identificarlo
             </MuiLink>
-          ))}
-        </Toolbar>
+          </Typography>
+        </Container>
       </Box>
-    </header>
+
+      {/* Barra Blanca */}
+      <Box sx={{ py: '5px', bgcolor: 'white' }}>
+        <Container maxWidth={false} sx={{ px: containerHeadersPadding }}>
+          <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={'15px'}>
+            <Typography sx={{ fontSize: '1rem', fontWeight: 'bold' }}>
+              Síguenos:
+            </Typography>
+            {socialIcons.map(icon => (
+              <MuiLink key={icon.alt} href={icon.href} target="_blank" rel="noopener noreferrer">
+                <IconButton size="small" sx={{ p: 0 }}>
+                  <img
+                    src={icon.src}
+                    alt={icon.alt}
+                    style={{ width: '1.35rem', height: '1.35rem' }}
+                  />
+                </IconButton>
+              </MuiLink>
+            ))}
+          </Stack>
+        </Container>
+      </Box>
+
+      {/* Barra Naranja Principal */}
+      <AppBar position="static" sx={{ bgcolor: '#ff8000', color: 'white' }}>
+        <Container maxWidth={false} sx={{ px: containerHeadersPadding }}>
+          <Box sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            alignItems: 'center',
+            width: '100%',
+            py: { xs: 0.2, md: 0.2 }
+          }}>
+            <Box
+              component="img"
+              src={logoGenlBlanco}
+              alt="Gobierno de Nuevo León"
+              sx={{
+                height: { xs: '40px', sm: '45px' },
+                width: 'auto',
+                mb: { xs: 0, md: 0 }
+              }}
+            />
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'block' } }} />
+            <Stack component="nav" direction={{ xs: 'column', md: 'row' }} alignItems="center" spacing={{ xs: 1, md: '25px' }}>
+              {mainNavLinks.map(link => (
+                <MuiLink
+                  key={link.text}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    color: 'white',
+                    textDecoration: 'none',
+                    fontWeight: 500,
+                    whiteSpace: 'nowrap',
+                    fontSize: '1.1rem',
+                    width: { xs: '100%', md: 'auto' },
+                    textAlign: 'center'
+                  }}
+                >
+                  {link.text}
+                </MuiLink>
+              ))}
+              <IconButton href="#" sx={{ color: 'white', p: 0, mt: { xs: 2, md: 0 }, ml: { md: '20px' } }}>
+                <img
+                  src={iconSearch}
+                  alt="Buscar"
+                  style={{ width: '1.5rem', height: '1.5rem' }}
+                />
+              </IconButton>
+            </Stack>
+          </Box>
+        </Container>
+      </AppBar>
+
+      {/* Logo + Título */}
+      <Box sx={{ width: '100%', bgcolor: '#FF8400', color: 'white', textAlign: 'center', py: 1 }}>
+        <Container maxWidth={false} sx={{ px: containerPadding }}>
+          <Stack direction="column" alignItems="center" justifyContent="center">
+            <Box
+              component="img"
+              src={logoLeonNL}
+              alt="Logo"
+              sx={{
+                height: { xs: '140px', md: '150px', lg: '160px' }
+              }}
+            />
+            <Typography
+              variant="h6"
+              fontWeight="bold"
+              sx={{
+                fontSize: {
+                  xs: '1.25rem',
+                  sm: '1.35rem',
+                  md: '1.45rem',
+                  lg: '1.55rem'
+                }
+              }}
+            >
+              Padrón Único de Beneficiarios del Gobierno de Nuevo León
+            </Typography>
+          </Stack>
+        </Container>
+      </Box>
+
+      {/* Menú de navegación secundaria */}
+      <Box sx={{ width: '100%', bgcolor: '#FF8400', color: 'white', py: 1 }}>
+        <Container maxWidth={false} sx={{ px: containerPadding }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', minHeight: 'auto' }}>
+            {menuItems.map((item) => (
+              <MuiLink
+                key={item.text}
+                component={Link}
+                to={item.path}
+                color="inherit"
+                underline="hover"
+                sx={{
+                  mx: { xs: 0.5, sm: 1, md: 1.5 },
+                  my: 0.5,
+                  fontWeight: 700,
+                  fontSize: '1.2rem',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                {item.text}
+              </MuiLink>
+            ))}
+          </Box>
+        </Container>
+      </Box>
+    </Box>
   );
 };
 
