@@ -69,6 +69,317 @@ interface RespuestaBeneficiariosPorFiltros {
   estadisticas: EstadisticasBeneficiarios;
 }
 
+// ==================== NUEVOS HOOKS CON FILTRADO ESCALONADO ====================
+
+// Hook para obtener años disponibles (siempre todos)
+export const useAniosDisponibles = () => {
+  const [anios, setAnios] = useState<number[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchAnios = async () => {
+    console.log('📅 Fetching años disponibles...');
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const response = await apiEndpoints.getAniosDisponibles() as ApiResponse<{anios: number[]}>;
+      console.log('✅ Años response:', response);
+      
+      if (response.success && response.data) {
+        setAnios(response.data.anios || []);
+        console.log('✅ Años data extracted:', response.data.anios);
+      } else {
+        throw new Error(response.message || 'Error al obtener años');
+      }
+    } catch (err) {
+      console.error('❌ Error fetching años:', err);
+      setError(handleApiError(err));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAnios();
+  }, []);
+
+  return { anios, loading, error, refetch: fetchAnios };
+};
+
+// Hook para obtener meses por año
+export const useMesesPorAnio = (anio: string | null) => {
+  const [meses, setMeses] = useState<number[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchMeses = async () => {
+    if (!anio) {
+      setMeses([]);
+      return;
+    }
+
+    console.log('📆 Fetching meses for año:', anio);
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const response = await apiEndpoints.getMesesPorAnio(anio) as ApiResponse<{meses: number[]}>;
+      console.log('✅ Meses response:', response);
+      
+      if (response.success && response.data) {
+        setMeses(response.data.meses || []);
+        console.log('✅ Meses data extracted:', response.data.meses);
+      } else {
+        setMeses([]);
+      }
+    } catch (err) {
+      console.error('❌ Error fetching meses:', err);
+      setError(handleApiError(err));
+      setMeses([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchMeses();
+  }, [anio]);
+
+  return { meses, loading, error, refetch: fetchMeses };
+};
+
+// Hook para obtener dependencias por año y mes
+export const useDependenciasPorFiltros = (filters: { anio: string | null; mes: string | null }) => {
+  const [dependencias, setDependencias] = useState<Dependencia[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchDependencias = async () => {
+    if (!filters.anio || !filters.mes) {
+      setDependencias([]);
+      return;
+    }
+
+    console.log('🏢 Fetching dependencias for filters:', filters);
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const response = await apiEndpoints.getDependenciasPorFiltros({
+        anio: filters.anio,
+        mes: filters.mes
+      }) as ApiResponse<{dependencias: Dependencia[]}>;
+      console.log('✅ Dependencias response:', response);
+      
+      if (response.success && response.data) {
+        setDependencias(response.data.dependencias || []);
+        console.log('✅ Dependencias data extracted:', response.data.dependencias);
+      } else {
+        setDependencias([]);
+      }
+    } catch (err) {
+      console.error('❌ Error fetching dependencias:', err);
+      setError(handleApiError(err));
+      setDependencias([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDependencias();
+  }, [filters.anio, filters.mes]);
+
+  return { dependencias, loading, error, refetch: fetchDependencias };
+};
+
+// Hook para obtener programas por filtros
+export const useProgramasPorFiltrosNuevo = (filters: { 
+  anio: string | null; 
+  mes: string | null; 
+  idDependencia: string | null;
+}) => {
+  const [programas, setProgramas] = useState<Programa[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchProgramas = async () => {
+    if (!filters.anio || !filters.mes || !filters.idDependencia) {
+      setProgramas([]);
+      return;
+    }
+
+    console.log('📊 Fetching programas for filters:', filters);
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const response = await apiEndpoints.getProgramasPorFiltros({
+        anio: filters.anio,
+        mes: filters.mes,
+        idDependencia: filters.idDependencia
+      }) as ApiResponse<{programas: Programa[]}>;
+      console.log('✅ Programas response:', response);
+      
+      if (response.success && response.data) {
+        setProgramas(response.data.programas || []);
+        console.log('✅ Programas data extracted:', response.data.programas);
+      } else {
+        setProgramas([]);
+      }
+    } catch (err) {
+      console.error('❌ Error fetching programas:', err);
+      setError(handleApiError(err));
+      setProgramas([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProgramas();
+  }, [filters.anio, filters.mes, filters.idDependencia]);
+
+  return { programas, loading, error, refetch: fetchProgramas };
+};
+
+// Hook para obtener componentes por filtros (ACTUALIZADO - SIN SUBPROGRAMA)
+export const useComponentesPorFiltrosNuevo = (filters: { 
+  anio: string | null; 
+  mes: string | null; 
+  idDependencia: string | null;
+  idPrograma: string | null;
+}) => {
+  const [componentes, setComponentes] = useState<Componente[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchComponentes = async () => {
+    if (!filters.anio || !filters.mes || !filters.idDependencia || !filters.idPrograma) {
+      setComponentes([]);
+      return;
+    }
+
+    console.log('🧩 Fetching componentes for filters:', filters);
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const response = await apiEndpoints.getComponentesPorFiltros({
+        anio: filters.anio,
+        mes: filters.mes,
+        idDependencia: filters.idDependencia,
+        idPrograma: filters.idPrograma
+      }) as ApiResponse<{componentes: Componente[]}>;
+      console.log('✅ Componentes response:', response);
+      
+      if (response.success && response.data) {
+        setComponentes(response.data.componentes || []);
+        console.log('✅ Componentes data extracted:', response.data.componentes);
+      } else {
+        setComponentes([]);
+      }
+    } catch (err) {
+      console.error('❌ Error fetching componentes:', err);
+      setError(handleApiError(err));
+      setComponentes([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchComponentes();
+  }, [filters.anio, filters.mes, filters.idDependencia, filters.idPrograma]);
+
+  return { componentes, loading, error, refetch: fetchComponentes };
+};
+
+// Hook para obtener beneficiarios con nuevos filtros (ACTUALIZADO - SIN SUBPROGRAMA - BÚSQUEDA MANUAL)
+export const useBeneficiariosPorFiltrosNuevo = (filters: {
+  anio: string | null;
+  mes: string | null;
+  idDependencia: string | null;
+  idPrograma?: string;
+  idComponente?: string;
+} | null) => {
+  const [beneficiarios, setBeneficiarios] = useState<BeneficiarioCompleto[]>([]);
+  const [estadisticas, setEstadisticas] = useState<EstadisticasBeneficiarios | null>(null);
+  const [metadata, setMetadata] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchBeneficiarios = async () => {
+    // Si no hay filtros (null), no hacer la consulta
+    if (!filters) {
+      setBeneficiarios([]);
+      setEstadisticas(null);
+      setMetadata(null);
+      return;
+    }
+
+    // Si no hay filtros mínimos, no hacer la consulta
+    if (!filters.anio || !filters.mes || !filters.idDependencia) {
+      setBeneficiarios([]);
+      setEstadisticas(null);
+      setMetadata(null);
+      return;
+    }
+
+    console.log('👥 Fetching beneficiarios con filtros nuevos:', filters);
+    setLoading(true);
+    setError(null);
+    
+    // DELAY TEMPORAL PARA VISUALIZAR EL PROGRESS BAR (REMOVER EN PRODUCCIÓN)
+    await new Promise(resolve => setTimeout(resolve, 2500)); // 2.5 segundos de delay
+    
+    try {
+      const response = await apiEndpoints.getBeneficiariosPorFiltros({
+        anio: filters.anio!,
+        mes: filters.mes!,
+        idDependencia: filters.idDependencia!,
+        idPrograma: filters.idPrograma,
+        idComponente: filters.idComponente
+      }) as ApiResponse<BeneficiarioCompleto[]>;
+      
+      console.log('✅ Beneficiarios response:', response);
+      
+      if (response.success && response.data) {
+        setBeneficiarios(Array.isArray(response.data) ? response.data : []);
+        setEstadisticas(response.metadata?.estadisticas || null);
+        setMetadata(response.metadata || null);
+        console.log('✅ Beneficiarios cargados:', Array.isArray(response.data) ? response.data.length : 0);
+      } else {
+        throw new Error(response.message || 'Error al obtener beneficiarios');
+      }
+    } catch (err) {
+      console.error('❌ Error fetching beneficiarios:', err);
+      setError(handleApiError(err));
+      setBeneficiarios([]);
+      setEstadisticas(null);
+      setMetadata(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchBeneficiarios();
+  }, [filters?.anio, filters?.mes, filters?.idDependencia, filters?.idPrograma, filters?.idComponente]);
+
+  return { 
+    beneficiarios, 
+    estadisticas, 
+    metadata, 
+    loading, 
+    error, 
+    refetch: fetchBeneficiarios 
+  };
+};
+
+// ==================== HOOKS LEGACY (mantener por compatibilidad) ====================
+
 // Hook para obtener dependencias disponibles (siempre todas)
 export const useDependenciasDisponibles = () => {
   const [dependencias, setDependencias] = useState<Dependencia[]>([]);
@@ -373,10 +684,11 @@ export const useBeneficiariosPorFiltros = (filters: {
     
     try {
       const response = await apiEndpoints.getBeneficiariosPorFiltros({
-        idDependencia: filters.idDependencia,
+        anio: filters.anio || '',
+        mes: '1', // Por defecto si se usa el hook legacy
+        idDependencia: filters.idDependencia || '',
         idPrograma: filters.idPrograma,
-        idComponente: filters.idComponente,
-        anio: filters.anio
+        idComponente: filters.idComponente
       }) as ApiResponse<BeneficiarioCompleto[]>;
       
       console.log('✅ Beneficiarios directos response:', response);

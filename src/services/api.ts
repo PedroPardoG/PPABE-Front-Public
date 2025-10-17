@@ -89,18 +89,66 @@ class ApiClient {
 // Export singleton instance
 export const apiClient = new ApiClient();
 
-// Specific API endpoints - Frontend público endpoints (Filtros Escalonados)
+// Specific API endpoints - Frontend público endpoints (Filtros Escalonados - NUEVOS)
 export const apiEndpoints = {
-  // 📋 Obtener dependencias disponibles (siempre todas)
+  // 📋 NUEVOS ENDPOINTS CON FILTRADO ESCALONADO
+  
+  // 1️⃣ Obtener años disponibles (siempre todos)
+  getAniosDisponibles: () => apiClient.get('/front-publico/anios-disponibles'),
+  
+  // 2️⃣ Obtener meses por año
+  getMesesPorAnio: (anio: string) => apiClient.get(`/front-publico/meses-por-anio?anio=${anio}`),
+  
+  // 3️⃣ Obtener dependencias por año y mes
+  getDependenciasPorFiltros: (filters: { anio: string; mes: string }) => {
+    const queryParams = new URLSearchParams();
+    queryParams.append('anio', filters.anio);
+    queryParams.append('mes', filters.mes);
+    return apiClient.get(`/front-publico/dependencias-por-filtros?${queryParams.toString()}`);
+  },
+  
+  // 4️⃣ Obtener programas por año, mes y dependencia
+  getProgramasPorFiltros: (filters: { anio: string; mes: string; idDependencia: string }) => {
+    const queryParams = new URLSearchParams();
+    queryParams.append('anio', filters.anio);
+    queryParams.append('mes', filters.mes);
+    queryParams.append('idDependencia', filters.idDependencia);
+    return apiClient.get(`/front-publico/programas-por-filtros?${queryParams.toString()}`);
+  },
+  
+  // 5️⃣ Obtener componentes por filtros
+  getComponentesPorFiltros: (filters: { anio: string; mes: string; idDependencia: string; idPrograma: string }) => {
+    const queryParams = new URLSearchParams();
+    queryParams.append('anio', filters.anio);
+    queryParams.append('mes', filters.mes);
+    queryParams.append('idDependencia', filters.idDependencia);
+    queryParams.append('idPrograma', filters.idPrograma);
+    return apiClient.get(`/front-publico/componentes-por-filtros?${queryParams.toString()}`);
+  },
+
+  // � Obtener beneficiarios directamente por filtros (ACTUALIZADO)
+  // 👥 Obtener beneficiarios directamente por filtros (ACTUALIZADO - SIN SUBPROGRAMA)
+  getBeneficiariosPorFiltros: (filters: {
+    anio: string; // OBLIGATORIO
+    mes: string; // OBLIGATORIO
+    idDependencia: string; // OBLIGATORIO
+    idPrograma?: string;
+    idComponente?: string;
+  }) => {
+    const queryParams = new URLSearchParams();
+    queryParams.append('anio', filters.anio);
+    queryParams.append('mes', filters.mes);
+    queryParams.append('idDependencia', filters.idDependencia);
+    if (filters.idPrograma) queryParams.append('idPrograma', filters.idPrograma);
+    if (filters.idComponente) queryParams.append('idComponente', filters.idComponente);
+    
+    return apiClient.get(`/front-publico/beneficiarios-por-filtros?${queryParams.toString()}`);
+  },
+
+  // 📋 ENDPOINTS LEGACY (mantener por compatibilidad)
   getDependenciasDisponibles: () => apiClient.get('/front-publico/dependencias-disponibles'),
-  
-  // 📋 Obtener programas por dependencia
   getProgramasPorDependencia: (idDependencia: string) => apiClient.get(`/front-publico/programas-por-dependencia/${idDependencia}`),
-  
-  // 📋 Obtener componentes por programa
   getComponentesPorPrograma: (idPrograma: string) => apiClient.get(`/front-publico/componentes-por-programa/${idPrograma}`),
-  
-  // 📋 Obtener años por filtros aplicados
   getAniosPorFiltros: (filters: {
     idDependencia?: string;
     idPrograma?: string;
@@ -111,22 +159,6 @@ export const apiEndpoints = {
     if (filters.idPrograma) queryParams.append('idPrograma', filters.idPrograma);
     if (filters.idComponente) queryParams.append('idComponente', filters.idComponente);
     return apiClient.get(`/front-publico/anios-por-filtros?${queryParams.toString()}`);
-  },
-
-  // � Obtener beneficiarios directamente por filtros (NUEVO ENFOQUE)
-  getBeneficiariosPorFiltros: (filters: {
-    idDependencia: string; // OBLIGATORIO
-    idPrograma?: string;
-    idComponente?: string;
-    anio?: string;
-  }) => {
-    const queryParams = new URLSearchParams();
-    queryParams.append('idDependencia', filters.idDependencia);
-    if (filters.idPrograma) queryParams.append('idPrograma', filters.idPrograma);
-    if (filters.idComponente) queryParams.append('idComponente', filters.idComponente);
-    if (filters.anio) queryParams.append('anio', filters.anio);
-    
-    return apiClient.get(`/front-publico/beneficiarios-por-filtros?${queryParams.toString()}`);
   },
 
   // �📁 Listar carpetas publicadas con filtros opcionales (LEGACY - puede mantenerse para descargas)
