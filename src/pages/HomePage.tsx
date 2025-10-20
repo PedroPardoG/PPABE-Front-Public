@@ -26,6 +26,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import DownloadIcon from '@mui/icons-material/CloudDownload';
 import { Link } from 'react-router-dom';
 import { menuItems } from '../components/Header';
+import HCaptchaWrapper, { HCaptchaHandle } from '../components/HCaptchaWrapper';
 import { 
   useAniosDisponibles, 
   useMesesPorAnio, 
@@ -211,6 +212,9 @@ const HomePage: React.FC = () => {
   // Ref para la sección de resultados (scroll automático)
   const resultsRef = useRef<HTMLDivElement>(null);
 
+  // Ref para el captcha
+  const captchaRef = useRef<HCaptchaHandle>(null);
+
   // Estados para filtros seleccionados (SIMPLIFICADO: Sin Subprograma)
   const [selectedAnio, setSelectedAnio] = useState<string>('');
   const [selectedMes, setSelectedMes] = useState<string[]>([]); // Array para múltiples meses
@@ -221,6 +225,10 @@ const HomePage: React.FC = () => {
   
   // Estado para controlar cuándo se debe buscar (búsqueda manual)
   const [shouldSearch, setShouldSearch] = useState<boolean>(false);
+
+  // Estados para el captcha
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState<string>('');
 
   // Hooks para datos con filtros escalonados (SIMPLIFICADO)
   const { anios, loading: loadingAnios, error: errorAnios } = useAniosDisponibles();
@@ -287,10 +295,32 @@ const HomePage: React.FC = () => {
     };
   }, []);
 
+  // Handlers para el captcha
+  const handleCaptchaVerify = (token: string) => {
+    setCaptchaToken(token);
+    setCaptchaError('');
+  };
+
+  const handleCaptchaExpire = () => {
+    setCaptchaToken(null);
+    setCaptchaError('El captcha ha expirado. Por favor, verifica nuevamente.');
+  };
+
+  const handleCaptchaError = (error: string) => {
+    setCaptchaToken(null);
+    setCaptchaError('Error al verificar el captcha. Por favor, intenta nuevamente.');
+  };
+
   // Handlers
   const handleSearch = () => {
     // Validar que se cumplan los filtros mínimos
     if (selectedAnio && selectedMes.length > 0 && selectedDependencia) {
+      // Validar captcha
+      if (!captchaToken) {
+        setCaptchaError('Por favor, completa la verificación del captcha.');
+        return;
+      }
+
       setShouldSearch(true);
       
       // Scroll automático a la sección de resultados después de un pequeño delay
@@ -314,6 +344,12 @@ const HomePage: React.FC = () => {
     setSelectedComponente('');
     setSearchTerm('');
     setShouldSearch(false);
+    setCaptchaToken(null);
+    setCaptchaError('');
+    // Resetear el captcha
+    if (captchaRef.current) {
+      captchaRef.current.resetCaptcha();
+    }
   };
 
   const handleDownload = () => {
@@ -624,14 +660,31 @@ const HomePage: React.FC = () => {
             </Grid>
           </Grid>
 
+            {/* hCaptcha - Solo mostrar si hay filtros mínimos seleccionados */}
+            {selectedAnio && selectedMes.length > 0 && selectedDependencia && (
+              <Box sx={{ mt: 3 }}>
+                <HCaptchaWrapper
+                  ref={captchaRef}
+                  onVerify={handleCaptchaVerify}
+                  onExpire={handleCaptchaExpire}
+                  onError={handleCaptchaError}
+                />
+                {captchaError && (
+                  <Alert severity="error" sx={{ mt: 2, mx: 'auto', maxWidth: '500px' }}>
+                    {captchaError}
+                  </Alert>
+                )}
+              </Box>
+            )}
+
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2, mt: 3, pt: 1 }}>
-              {/* Botón Buscar - Solo habilitado si hay filtros mínimos */}
+              {/* Botón Buscar - Solo habilitado si hay filtros mínimos Y captcha verificado */}
               <Button
                 variant="contained"
                 color="primary"
                 startIcon={<SearchIcon />}
                 onClick={handleSearch}
-                disabled={!selectedAnio || selectedMes.length === 0 || !selectedDependencia || loadingBeneficiarios}
+                disabled={!selectedAnio || selectedMes.length === 0 || !selectedDependencia || !captchaToken || loadingBeneficiarios}
                 sx={{ 
                   bgcolor: '#FF6B35',
                   color: 'white', 
