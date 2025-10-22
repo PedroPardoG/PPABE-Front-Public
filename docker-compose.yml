@@ -1,0 +1,20 @@
+services:
+  frontend:
+    build: .
+    container_name: frontend_app_public
+    restart: always
+    ports:
+      - "${FRONT_PORT}:5173"
+    environment:
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
+      - CHOKIDAR_USEPOLLING=true
+    env_file:
+      - .env
+    volumes:
+      - ./src:/app/src
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0
+
+networks:
+  default:
+    driver: bridge 
