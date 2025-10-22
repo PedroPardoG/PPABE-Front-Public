@@ -19,7 +19,8 @@ import iconTiktok from '../assets/icon-tiktok.png';
 import iconYoutube from '../assets/icon-youtube.png';
 import iconSearch from '../assets/icon-search.png';
 
-const menuItems = [
+// Exportar menuItems para usar en otras páginas
+export const menuItems = [
   { text: "Consulta el Padrón", path: "/" },
   { text: "Marco Jurídico", path: "/marco-juridico" },
   { text: "¿Qué es el Padrón?", path: "/que-es-el-padron" },
@@ -170,62 +171,6 @@ const Header = () => {
           </Box>
         </Container>
       </AppBar>
-
-      {/* Logo + Título */}
-      <Box sx={{ width: '100%', bgcolor: '#FF8400', color: 'white', textAlign: 'center', py: 1 }}>
-        <Container maxWidth={false} sx={{ px: containerPadding }}>
-          <Stack direction="column" alignItems="center" justifyContent="center">
-            <Box
-              component="img"
-              src={logoLeonNL}
-              alt="Logo"
-              sx={{
-                height: { xs: '140px', md: '150px', lg: '160px' }
-              }}
-            />
-            <Typography
-              variant="h6"
-              fontWeight="bold"
-              sx={{
-                fontSize: {
-                  xs: '1.25rem',
-                  sm: '1.35rem',
-                  md: '1.45rem',
-                  lg: '1.55rem'
-                }
-              }}
-            >
-              Padrón Único de Beneficiarios del Gobierno de Nuevo León
-            </Typography>
-          </Stack>
-        </Container>
-      </Box>
-
-      {/* Menú de navegación secundaria */}
-      <Box sx={{ width: '100%', bgcolor: '#FF8400', color: 'white', py: 1 }}>
-        <Container maxWidth={false} sx={{ px: containerPadding }}>
-          <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', minHeight: 'auto' }}>
-            {menuItems.map((item) => (
-              <MuiLink
-                key={item.text}
-                component={Link}
-                to={item.path}
-                color="inherit"
-                underline="hover"
-                sx={{
-                  mx: { xs: 0.5, sm: 1, md: 1.5 },
-                  my: 0.5,
-                  fontWeight: 700,
-                  fontSize: '1.2rem',
-                  whiteSpace: 'nowrap'
-                }}
-              >
-                {item.text}
-              </MuiLink>
-            ))}
-          </Box>
-        </Container>
-      </Box>
     </Box>
   );
 };
