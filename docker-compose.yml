@@ -4,12 +4,11 @@ services:
     container_name: frontend_app_public
     restart: always
     ports:
-      - "${FRONT_PORT}:5173"
-    environment:
-      - REACT_APP_API_URL=${REACT_APP_API_URL}
-      - CHOKIDAR_USEPOLLING=true
+      - "${PORT}:5173"
     env_file:
       - .env
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./src:/app/src
       - /app/node_modules
@@ -17,4 +16,4 @@ services:
 
 networks:
   default:
-    driver: bridge 
+    driver: bridge
