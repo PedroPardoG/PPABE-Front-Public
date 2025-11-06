@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Typography, List, ListItem, Link as MuiLink } from '@mui/material';
+import BackToPadron from '../components/BackToPadron';
 
 const EnlacesInteresPage: React.FC = () => {
   // Azul estándar de enlaces
@@ -7,6 +8,7 @@ const EnlacesInteresPage: React.FC = () => {
 
   return (
     <Box sx={{ mt: 4, mb: 4, px: { xs: 2, sm: 4, md: 6 } }}>
+      <BackToPadron />
       <section id="documentos">
         {/* H2 gobernado por theme (sin sx.fontSize) */}
         <Typography

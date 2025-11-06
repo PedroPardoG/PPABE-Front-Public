@@ -1,9 +1,11 @@
 import React from 'react';
 import { Box, Typography, List, ListItem, ListItemText } from '@mui/material';
+import BackToPadron from '../components/BackToPadron';
 
 const MarcoJuridicoPage: React.FC = () => {
   return (
     <Box sx={{ mt: 4, mb: 4, px: { xs: 2, sm: 4, md: 6 } }}>
+      <BackToPadron />
       <section id="marco">
         {/* H2 controlado por el theme (sin sx.fontSize) */}
         <Typography
