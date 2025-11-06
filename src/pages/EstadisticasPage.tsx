@@ -148,7 +148,7 @@ const EstadisticasPage: React.FC = () => {
       legendControlRef.current = null;
     }
 
-    const legend = L.control({ position: 'bottomright' }) as L.Control & { _div?: HTMLElement };
+    const legend = new L.Control({ position: 'bottomright' }) as L.Control & { _div?: HTMLElement };
     legend.onAdd = function () {
       const div = L.DomUtil.create('div', 'info legend');
       const grades = [0, 500, 1000, 3000, 5000, 10000, 20000, 50000];
@@ -197,7 +197,7 @@ const EstadisticasPage: React.FC = () => {
         attribution: '&copy; OpenStreetMap',
       }).addTo(map);
 
-      const info = L.control({ position: 'topright' }) as L.Control & { _div?: HTMLElement; update: (props?: FeatureProperties) => void };
+      const info = new L.Control({ position: 'topright' }) as L.Control & { _div?: HTMLElement; update: (props?: FeatureProperties) => void };
       info.onAdd = function () {
         this._div = L.DomUtil.create('div', 'info');
         return this._div;
@@ -281,7 +281,6 @@ const EstadisticasPage: React.FC = () => {
           navButtonsAlwaysVisible={false}
           autoPlay
           indicators
-          emulateTouch
           indicatorIconButtonProps={{ style: { color: 'rgba(0,0,0,0.5)', marginTop: '5px', marginBottom: '20px' } }}
           activeIndicatorIconButtonProps={{ style: { color: '#000000' } }}
         >
