@@ -11,7 +11,17 @@ const BackToPadron: React.FC = () => {
   if (isHome) return null;
 
   return (
-    <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', mb: 3 }}>
+    <Box 
+      sx={{ 
+        position: 'sticky',
+        bottom: 20,
+        width: '100%', 
+        display: 'flex', 
+        justifyContent: 'center',
+        zIndex: 1000,
+        mt: 3
+      }}
+    >
       <Button
         component={RouterLink}
         to="/"
@@ -23,7 +33,11 @@ const BackToPadron: React.FC = () => {
           fontWeight: 'bold',
           borderRadius: '20px',
           px: 3,
-          '&:hover': { bgcolor: '#FF8C5A' }
+          boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+          '&:hover': { 
+            bgcolor: '#FF8C5A',
+            boxShadow: '0 6px 16px rgba(0,0,0,0.4)'
+          }
         }}
       >
         REGRESAR A CONSULTAR EL PADRÓN
