@@ -11,20 +11,24 @@ const BackToPadron: React.FC = () => {
   if (isHome) return null;
 
   return (
-    <Box 
-      sx={{ 
-        position: 'sticky',
-        bottom: 20,
-        width: '100%', 
-        display: 'flex', 
+    <Box
+      sx={{
+        // Use fixed to ensure it stays visible regardless of scroll container quirks
+        position: 'fixed',
+        bottom: 'calc(16px + env(safe-area-inset-bottom, 0px))',
+        left: 0,
+        right: 0,
+        width: '100%',
+        display: 'flex',
         justifyContent: 'center',
-        zIndex: 1000,
-        mt: 3
+        zIndex: 1100, // above typical content
+        pointerEvents: 'none', // allow clicks to pass except on the button
       }}
     >
       <Button
         component={RouterLink}
         to="/"
+        aria-label="Regresar a consultar el padrón"
         variant="contained"
         sx={{
           bgcolor: '#FF6B35',
@@ -33,10 +37,12 @@ const BackToPadron: React.FC = () => {
           fontWeight: 'bold',
           borderRadius: '20px',
           px: 3,
-          boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-          '&:hover': { 
+          py: 1,
+          boxShadow: '0 6px 16px rgba(0,0,0,0.35)',
+          pointerEvents: 'auto',
+          '&:hover': {
             bgcolor: '#FF8C5A',
-            boxShadow: '0 6px 16px rgba(0,0,0,0.4)'
+            boxShadow: '0 8px 22px rgba(0,0,0,0.45)'
           }
         }}
       >

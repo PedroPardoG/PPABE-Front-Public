@@ -32,7 +32,7 @@ const FAQPage: React.FC = () => {
             ¿Puedo ver nombres de beneficiarios?
           </Typography>
           <Typography paragraph>
-            Sí, siempre que la ley lo permita y se cumpla con las disposiciones de protección de datos personales. En algunos casos, los nombres pueden mostrarse de manera parcial o anonimizados, especialmente si se trata de personas en situación vulnerable.
+            Sí, siempre que la ley lo permita y se cumpla con las disposiciones de protección de datos personales. En algunos casos, los nombres pueden mostrarse de manera parcial o anonimizados, especialmente si se trata de personas menores de edad y en situación vulnerable.
           </Typography>
         </Box>
 
@@ -54,14 +54,7 @@ const FAQPage: React.FC = () => {
           </Typography>
         </Box>
 
-        <Box sx={{ mb: 4 }}>
-          <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
-            ¿Puedo reportar errores o inconsistencias?
-          </Typography>
-          <Typography paragraph>
-            Sí. Si detectas errores o información incorrecta, puedes contactar al área responsable del portal mediante el formulario de contacto disponible en la sección “Contacto”. También puedes enviar sugerencias o comentarios para mejorar la plataforma.
-          </Typography>
-        </Box>
+      
 
         <Box sx={{ mb: 4 }}>
           <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>

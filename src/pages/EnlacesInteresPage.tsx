@@ -52,16 +52,29 @@ const EnlacesInteresPage: React.FC = () => {
                 Ley de Transparencia y Acceso a la Información Pública del Estado de Nuevo León
               </MuiLink>
             </ListItem>
-            <ListItem sx={{ display: 'list-item', p: 0, mb: 1 }}>
+
+             <ListItem sx={{ display: 'list-item', p: 0, mb: 1 }}>
               <MuiLink
-                href="https://smpu.nl.gob.mx/Archivos/MIR/Normatividad/Documentos/CRITERIOS%20PADRON%20DE%20BENEFICIARIOS.pdf-20190620%20142819..pdf"
+                href="https://evalua-pbr.nl.gob.mx/wp-content/uploads/2023/08/POE-28AGO2023-Lineamientos-PbR-SED-NL-2023-1.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 sx={{ color: linkColor }}
               >
-                Manual de Operaciones del SIIPB-NL
+                Lineamientos para la Integración y Actualización del Padrón de Beneficiarios del Estado de Nuevo León
               </MuiLink>
             </ListItem>
+
+             <ListItem sx={{ display: 'list-item', p: 0, mb: 1 }}>
+              <MuiLink
+                href="https://evalua-pbr.nl.gob.mx/wp-content/uploads/2025/10/V1.0-02OCT2025-Manual-PbR-SED-NL-2023-VF.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{ color: linkColor }}
+              >
+                Manual para la Operación del Padrón de Beneficiarios del Estado de Nuevo León
+              </MuiLink>
+            </ListItem>
+            
           </List>
         </Box>
 
