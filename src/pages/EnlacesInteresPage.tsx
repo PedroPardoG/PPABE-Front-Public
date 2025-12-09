@@ -107,56 +107,7 @@ const EnlacesInteresPage: React.FC = () => {
           </List>
         </Box>
 
-        {/* --- Formatos y Catálogos de Datos --- */}
-        <Box sx={{ mb: 4 }}>
-          <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
-            Formatos y Catálogos de Datos
-          </Typography>
-          <List sx={{ listStyleType: 'disc', pl: 4 }}>
-            <ListItem sx={{ display: 'list-item', p: 0, mb: 1 }}>
-              <MuiLink href="#" target="_blank" rel="noopener noreferrer" sx={{ color: linkColor }}>
-                Formato de Padrón Único (FPU) – Versión PDF
-              </MuiLink>
-            </ListItem>
-            <ListItem sx={{ display: 'list-item', p: 0, mb: 1 }}>
-              <MuiLink href="#" target="_blank" rel="noopener noreferrer" sx={{ color: linkColor }}>
-                Catálogo de Variables del FPU
-              </MuiLink>
-            </ListItem>
-            <ListItem sx={{ display: 'list-item', p: 0, mb: 1 }}>
-              <MuiLink href="#" target="_blank" rel="noopener noreferrer" sx={{ color: linkColor }}>
-                Catálogo de Valores Permitidos
-              </MuiLink>
-            </ListItem>
-            <ListItem sx={{ display: 'list-item', p: 0, mb: 1 }}>
-              <MuiLink href="#" target="_blank" rel="noopener noreferrer" sx={{ color: linkColor }}>
-                Lineamientos para Integración y Actualización de Padrones
-              </MuiLink>
-            </ListItem>
-          </List>
-          <Typography paragraph sx={{ mt: 2 }}>
-            Estos formatos permiten conocer cómo se recaba la información y garantizan la estandarización entre las diferentes dependencias del Gobierno Estatal.
-          </Typography>
-        </Box>
-
-        {/* --- Otros Recursos --- */}
-        <Box sx={{ mb: 4 }}>
-          <Typography variant="h3" component="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
-            Otros Recursos
-          </Typography>
-          <List sx={{ listStyleType: 'disc', pl: 4 }}>
-            <ListItem sx={{ display: 'list-item', p: 0, mb: 1 }}>
-              <MuiLink href="#" target="_blank" rel="noopener noreferrer" sx={{ color: linkColor }}>
-                Política de Uso y Reutilización de Datos Abiertos
-              </MuiLink>
-            </ListItem>
-            <ListItem sx={{ display: 'list-item', p: 0, mb: 1 }}>
-              <MuiLink href="#" target="_blank" rel="noopener noreferrer" sx={{ color: linkColor }}>
-                Criterios para Publicación del Padrón
-              </MuiLink>
-            </ListItem>
-          </List>
-        </Box>
+        
 
         {/* --- Nota Final --- */}
         <Box sx={{ borderLeft: '4px solid #FF8000', pl: 2, fontStyle: 'italic', mb: 4 }}>

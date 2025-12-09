@@ -277,33 +277,43 @@ const Header = () => {
 
           {/* Links principales */}
           <List sx={{ pt: 2 }}>
-            {mainNavLinks.map((link) => (
-              <ListItem key={link.text} disablePadding>
-                <ListItemButton
-                  component="a"
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{
-                    py: 2,
-                    px: 3,
-                    '&:hover': {
-                      bgcolor: 'rgba(255,255,255,0.1)'
-                    }
-                  }}
-                >
-                  <ListItemText 
-                    primary={link.text}
-                    primaryTypographyProps={{
-                      sx: { 
-                        fontSize: '1.1rem',
-                        fontWeight: 500,
-                        color: 'white'
+            {mainNavLinks.map((link, index) => (
+              <React.Fragment key={link.text}>
+                <ListItem disablePadding>
+                  <ListItemButton
+                    component="a"
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      py: 2,
+                      px: 3,
+                      '&:hover': {
+                        bgcolor: 'rgba(255,255,255,0.1)'
                       }
                     }}
+                  >
+                    <ListItemText 
+                      primary={link.text}
+                      primaryTypographyProps={{
+                        sx: { 
+                          fontSize: '1.1rem',
+                          fontWeight: 500,
+                          color: 'white'
+                        }
+                      }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+                {index < mainNavLinks.length - 1 && (
+                  <Divider 
+                    sx={{ 
+                      bgcolor: 'rgba(255,255,255,0.15)',
+                      mx: 2
+                    }} 
                   />
-                </ListItemButton>
-              </ListItem>
+                )}
+              </React.Fragment>
             ))}
           </List>
 
