@@ -232,21 +232,20 @@ const HomePage: React.FC = () => {
 
   // Hooks para datos con filtros escalonados (SIMPLIFICADO)
   const { anios, loading: loadingAnios, error: errorAnios } = useAniosDisponibles();
-  const { meses, loading: loadingMeses, error: errorMeses } = useMesesPorAnio(selectedAnio || null);
+  const { meses, loading: loadingMeses, error: errorMeses } = useMesesPorAnio(selectedAnio || null, selectedDependencia || null);
   const { dependencias, loading: loadingDependencias, error: errorDependencias } = useDependenciasPorFiltros({
-    anio: selectedAnio || null,
-    mes: selectedMes.length > 0 ? selectedMes.join(',') : null
+    anio: selectedAnio || null
   });
   const { programas, loading: loadingProgramas, error: errorProgramas } = useProgramasPorFiltrosNuevo({
     anio: selectedAnio || null,
-    mes: selectedMes.length > 0 ? selectedMes.join(',') : null,
-    idDependencia: selectedDependencia || null
+    idDependencia: selectedDependencia || null,
+    mes: selectedMes.length > 0 ? selectedMes.join(',') : null
   });
   const { componentes, loading: loadingComponentes, error: errorComponentes } = useComponentesPorFiltrosNuevo({
     anio: selectedAnio || null,
-    mes: selectedMes.length > 0 ? selectedMes.join(',') : null,
     idDependencia: selectedDependencia || null,
-    idPrograma: selectedPrograma || null
+    idPrograma: selectedPrograma || null,
+    mes: selectedMes.length > 0 ? selectedMes.join(',') : null
   });
   
   // Hook principal: Beneficiarios directos por filtros (SIMPLIFICADO - BÚSQUEDA MANUAL)
@@ -314,7 +313,7 @@ const HomePage: React.FC = () => {
   // Handlers
   const handleSearch = () => {
     // Validar que se cumplan los filtros mínimos
-    if (selectedAnio && selectedMes.length > 0 && selectedDependencia) {
+    if (selectedAnio && selectedDependencia) {
       // Validar captcha
       if (!captchaToken) {
         setCaptchaError('Por favor, completa la verificación del captcha.');
@@ -512,7 +511,7 @@ const HomePage: React.FC = () => {
           Filtros de Búsqueda
         </Typography>
         
-        {/* Filtros - NUEVOS: Año y Mes primero (OBLIGATORIOS) */}
+        {/* Filtros - NUEVOS: Año y Dependencia obligatorios; Mes/Programa/Componente opcionales */}
         {!errorAnios && (
           <>
             <Grid container spacing={2} alignItems="center">
@@ -527,9 +526,9 @@ const HomePage: React.FC = () => {
                   onChange={(e) => {
                     const newAnio = e.target.value;
                     setSelectedAnio(newAnio);
-                    // Limpiar todos los filtros dependientes
-                    setSelectedMes([]);
+                    // Limpiar filtros dependientes
                     setSelectedDependencia('');
+                    setSelectedMes([]);
                     setSelectedPrograma('');
                     setSelectedComponente('');
                   }}
@@ -545,47 +544,7 @@ const HomePage: React.FC = () => {
               </FormControl>
             </Grid>
 
-            {/* 2️⃣ Mes - Solo disponible si hay año (OBLIGATORIO) - SELECCIÓN MÚLTIPLE */}
-            <Grid item xs={12} sm={6} md={2}>
-              <FormControl fullWidth variant="outlined" size="small" required>
-                <InputLabel id="mes-label">Mes(es) *</InputLabel>
-                <Select
-                  labelId="mes-label"
-                  multiple
-                  value={selectedMes}
-                  label="Mes(es) *"
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setSelectedMes(typeof value === 'string' ? value.split(',') : value as string[]);
-                    // Limpiar filtros dependientes
-                    setSelectedDependencia('');
-                    setSelectedPrograma('');
-                    setSelectedComponente('');
-                  }}
-                  renderValue={(selected) => 
-                    (selected as string[])
-                      .map(mes => {
-                        const monthNum = parseInt(mes);
-                        return new Date(2000, monthNum - 1).toLocaleString('es-MX', { month: 'short' })
-                          .charAt(0).toUpperCase() + 
-                          new Date(2000, monthNum - 1).toLocaleString('es-MX', { month: 'short' }).slice(1);
-                      })
-                      .join(', ')
-                  }
-                  sx={{ bgcolor: 'white', borderRadius: '4px' }}
-                  disabled={!selectedAnio || loadingMeses || shouldSearch}
-                >
-                  {meses?.map((mes) => (
-                    <MenuItem key={mes} value={mes.toString()}>
-                      {new Date(2000, mes - 1).toLocaleString('es-MX', { month: 'long' }).charAt(0).toUpperCase() + 
-                       new Date(2000, mes - 1).toLocaleString('es-MX', { month: 'long' }).slice(1)}
-                    </MenuItem>
-                  )) || []}
-                </Select>
-              </FormControl>
-            </Grid>
-
-            {/* 3️⃣ Dependencia - Solo disponible si hay año y mes (OBLIGATORIO) */}
+            {/* 2️⃣ Dependencia - Solo disponible si hay año (OBLIGATORIO) */}
             <Grid item xs={12} sm={6} md={2}>
               <FormControl fullWidth variant="outlined" size="small" required>
                 <InputLabel id="dependencia-label">Dependencia *</InputLabel>
@@ -601,11 +560,50 @@ const HomePage: React.FC = () => {
                     setSelectedComponente('');
                   }}
                   sx={{ bgcolor: 'white', borderRadius: '4px' }}
-                  disabled={!selectedAnio || !selectedMes || loadingDependencias || shouldSearch}
+                  disabled={!selectedAnio || loadingDependencias || shouldSearch}
                 >
                   {dependencias?.map((dep) => (
                     <MenuItem key={dep.id} value={dep.id}>
                       {dep.nombre}
+                    </MenuItem>
+                  )) || []}
+                </Select>
+              </FormControl>
+            </Grid>
+
+            {/* 3️⃣ Mes - Opcional, disponible si hay Año y Dependencia */}
+            <Grid item xs={12} sm={6} md={2}>
+              <FormControl fullWidth variant="outlined" size="small">
+                <InputLabel id="mes-label">Mes(es)</InputLabel>
+                <Select
+                  labelId="mes-label"
+                  multiple
+                  value={selectedMes}
+                  label="Mes(es)"
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setSelectedMes(typeof value === 'string' ? value.split(',') : value as string[]);
+                    // Limpiar filtros dependientes
+                    setSelectedPrograma('');
+                    setSelectedComponente('');
+                  }}
+                  renderValue={(selected) => 
+                    (selected as string[])
+                      .map(mes => {
+                        const monthNum = parseInt(mes);
+                        return new Date(2000, monthNum - 1).toLocaleString('es-MX', { month: 'short' })
+                          .charAt(0).toUpperCase() + 
+                          new Date(2000, monthNum - 1).toLocaleString('es-MX', { month: 'short' }).slice(1);
+                      })
+                      .join(', ')
+                  }
+                  sx={{ bgcolor: 'white', borderRadius: '4px' }}
+                  disabled={!selectedAnio || !selectedDependencia || loadingMeses || shouldSearch}
+                >
+                  {meses?.map((mes) => (
+                    <MenuItem key={mes} value={mes.toString()}>
+                      {new Date(2000, mes - 1).toLocaleString('es-MX', { month: 'long' }).charAt(0).toUpperCase() + 
+                       new Date(2000, mes - 1).toLocaleString('es-MX', { month: 'long' }).slice(1)}
                     </MenuItem>
                   )) || []}
                 </Select>
@@ -627,7 +625,7 @@ const HomePage: React.FC = () => {
                     setSelectedComponente('');
                   }}
                   sx={{ bgcolor: 'white', borderRadius: '4px' }}
-                  disabled={!selectedAnio || !selectedMes || !selectedDependencia || loadingProgramas}
+                  disabled={!selectedAnio || !selectedDependencia || loadingProgramas}
                 >
                   {programas?.map((prog) => (
                     <MenuItem key={prog.id} value={prog.id}>
@@ -661,7 +659,7 @@ const HomePage: React.FC = () => {
           </Grid>
 
             {/* hCaptcha - Solo mostrar si hay filtros mínimos seleccionados */}
-            {selectedAnio && selectedMes.length > 0 && selectedDependencia && (
+            {selectedAnio && selectedDependencia && (
               <Box sx={{ mt: 3 }}>
                 <HCaptchaWrapper
                   ref={captchaRef}
@@ -684,7 +682,7 @@ const HomePage: React.FC = () => {
                 color="primary"
                 startIcon={<SearchIcon />}
                 onClick={handleSearch}
-                disabled={!selectedAnio || selectedMes.length === 0 || !selectedDependencia || !captchaToken || loadingBeneficiarios}
+                disabled={!selectedAnio || !selectedDependencia || !captchaToken || loadingBeneficiarios}
                 sx={{ 
                   bgcolor: '#FF6B35',
                   color: 'white', 
@@ -701,7 +699,7 @@ const HomePage: React.FC = () => {
               </Button>
               
               {/* Botón Limpiar Filtros - Solo mostrar si hay algún filtro seleccionado */}
-              {(selectedAnio || selectedMes || selectedDependencia || selectedPrograma || selectedComponente || searchTerm) && (
+              {(selectedAnio || selectedMes.length > 0 || selectedDependencia || selectedPrograma || selectedComponente || searchTerm) && (
                 <Button
                   variant="outlined"
                   onClick={handleClearFilters}
@@ -726,24 +724,24 @@ const HomePage: React.FC = () => {
       </Paper>
 
       {/* Mensajes informativos */}
-      {(!selectedAnio || selectedMes.length === 0 || !selectedDependencia) && (
+      {(!selectedAnio || !selectedDependencia) && (
         <Paper elevation={1} sx={{ bgcolor: '#f7f7f7', py: 3, px: { xs: 1, sm: 2, md: 3 }, mb: 4, borderRadius: '8px' }}>
           <Typography variant="h3" component="h3" sx={{ mb: 2, fontWeight: 700, textAlign: 'center' }}>
             Completa los filtros mínimos para comenzar
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
-            Debes seleccionar <strong>Año, Mes(es) y Dependencia</strong> y hacer clic en <strong>Buscar</strong>.
+            Debes seleccionar <strong>Año y Dependencia</strong> y hacer clic en <strong>Buscar</strong>.
           </Typography>
         </Paper>
       )}
 
-      {selectedAnio && selectedMes.length > 0 && selectedDependencia && !shouldSearch && !loadingBeneficiarios && (
+      {selectedAnio && selectedDependencia && !shouldSearch && !loadingBeneficiarios && (
         <Paper elevation={1} sx={{ bgcolor: '#fff3e0', py: 3, px: { xs: 1, sm: 2, md: 3 }, mb: 4, borderRadius: '8px' }}>
           <Typography variant="h3" component="h3" sx={{ mb: 2, fontWeight: 700, textAlign: 'center' }}>
             Haz clic en "Buscar" para ver los resultados
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
-            Los filtros mínimos están completos. Presiona el botón <strong>Buscar</strong> para visualizar los beneficiarios.
+            Los filtros mínimos (Año y Dependencia) están completos. Presiona el botón <strong>Buscar</strong> para visualizar los beneficiarios.
           </Typography>
         </Paper>
       )}

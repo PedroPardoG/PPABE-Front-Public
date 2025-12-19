@@ -96,53 +96,66 @@ export const apiEndpoints = {
   // 1️⃣ Obtener años disponibles (siempre todos)
   getAniosDisponibles: () => apiClient.get('/front-publico/anios-disponibles'),
   
-  // 2️⃣ Obtener meses por año
-  getMesesPorAnio: (anio: string) => apiClient.get(`/front-publico/meses-por-anio?anio=${anio}`),
-  
-  // 3️⃣ Obtener dependencias por año y mes
-  getDependenciasPorFiltros: (filters: { anio: string; mes: string }) => {
+  // 2️⃣ Obtener meses por año (y opcionalmente dependencia)
+  getMesesPorAnio: (anio: string, idDependencia?: string | null) => {
     const queryParams = new URLSearchParams();
-    queryParams.append('anio', filters.anio);
-    queryParams.append('mes', filters.mes);
-    return apiClient.get(`/front-publico/dependencias-por-filtros?${queryParams.toString()}`);
+    queryParams.append('anio', anio);
+    if (idDependencia) queryParams.append('idDependencia', idDependencia);
+    return apiClient.get(`/front-publico/meses-por-anio?${queryParams.toString()}`);
   },
   
-  // 4️⃣ Obtener programas por año, mes y dependencia
-  getProgramasPorFiltros: (filters: { anio: string; mes: string; idDependencia: string }) => {
+  // 3️⃣ Obtener dependencias por año (mes opcional)
+  getDependenciasPorFiltros: (filters: { anio: string; mes?: string | null }) => {
     const queryParams = new URLSearchParams();
     queryParams.append('anio', filters.anio);
-    queryParams.append('mes', filters.mes);
+    if (filters.mes) queryParams.append('mes', filters.mes);
+    const qs = queryParams.toString();
+    const suffix = qs ? `?${qs}` : '';
+    return apiClient.get(`/front-publico/dependencias-por-filtros${suffix}`);
+  },
+  
+  // 4️⃣ Obtener programas por año y dependencia (mes opcional)
+  getProgramasPorFiltros: (filters: { anio: string; mes?: string | null; idDependencia: string }) => {
+    const queryParams = new URLSearchParams();
+    queryParams.append('anio', filters.anio);
+    if (filters.mes) queryParams.append('mes', filters.mes);
     queryParams.append('idDependencia', filters.idDependencia);
-    return apiClient.get(`/front-publico/programas-por-filtros?${queryParams.toString()}`);
+    const qs = queryParams.toString();
+    const suffix = qs ? `?${qs}` : '';
+    return apiClient.get(`/front-publico/programas-por-filtros${suffix}`);
   },
   
-  // 5️⃣ Obtener componentes por filtros
-  getComponentesPorFiltros: (filters: { anio: string; mes: string; idDependencia: string; idPrograma: string }) => {
+  // 5️⃣ Obtener componentes por filtros (mes opcional)
+  getComponentesPorFiltros: (filters: { anio: string; mes?: string | null; idDependencia: string; idPrograma: string }) => {
     const queryParams = new URLSearchParams();
     queryParams.append('anio', filters.anio);
-    queryParams.append('mes', filters.mes);
+    if (filters.mes) queryParams.append('mes', filters.mes);
     queryParams.append('idDependencia', filters.idDependencia);
     queryParams.append('idPrograma', filters.idPrograma);
-    return apiClient.get(`/front-publico/componentes-por-filtros?${queryParams.toString()}`);
+    const qs = queryParams.toString();
+    const suffix = qs ? `?${qs}` : '';
+    return apiClient.get(`/front-publico/componentes-por-filtros${suffix}`);
   },
 
   // � Obtener beneficiarios directamente por filtros (ACTUALIZADO)
   // 👥 Obtener beneficiarios directamente por filtros (ACTUALIZADO - SIN SUBPROGRAMA)
   getBeneficiariosPorFiltros: (filters: {
     anio: string; // OBLIGATORIO
-    mes: string; // OBLIGATORIO
+    mes?: string | null; // Opcional
     idDependencia: string; // OBLIGATORIO
     idPrograma?: string;
     idComponente?: string;
   }) => {
     const queryParams = new URLSearchParams();
     queryParams.append('anio', filters.anio);
-    queryParams.append('mes', filters.mes);
+    if (filters.mes) queryParams.append('mes', filters.mes);
     queryParams.append('idDependencia', filters.idDependencia);
     if (filters.idPrograma) queryParams.append('idPrograma', filters.idPrograma);
     if (filters.idComponente) queryParams.append('idComponente', filters.idComponente);
-    
-    return apiClient.get(`/front-publico/beneficiarios-por-filtros?${queryParams.toString()}`);
+
+    const qs = queryParams.toString();
+    const suffix = qs ? `?${qs}` : '';
+    return apiClient.get(`/front-publico/beneficiarios-por-filtros${suffix}`);
   },
 
   // 📋 ENDPOINTS LEGACY (mantener por compatibilidad)

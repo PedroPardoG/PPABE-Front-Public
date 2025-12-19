@@ -107,8 +107,8 @@ export const useAniosDisponibles = () => {
   return { anios, loading, error, refetch: fetchAnios };
 };
 
-// Hook para obtener meses por año
-export const useMesesPorAnio = (anio: string | null) => {
+// Hook para obtener meses por año (y opcionalmente dependencia)
+export const useMesesPorAnio = (anio: string | null, idDependencia?: string | null) => {
   const [meses, setMeses] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -119,12 +119,12 @@ export const useMesesPorAnio = (anio: string | null) => {
       return;
     }
 
-    console.log('📆 Fetching meses for año:', anio);
+    console.log('📆 Fetching meses for año:', anio, 'dependencia:', idDependencia);
     setLoading(true);
     setError(null);
     
     try {
-      const response = await apiEndpoints.getMesesPorAnio(anio) as ApiResponse<{meses: number[]}>;
+      const response = await apiEndpoints.getMesesPorAnio(anio, idDependencia || null) as ApiResponse<{meses: number[]}>;
       console.log('✅ Meses response:', response);
       
       if (response.success && response.data) {
@@ -144,19 +144,19 @@ export const useMesesPorAnio = (anio: string | null) => {
 
   useEffect(() => {
     fetchMeses();
-  }, [anio]);
+  }, [anio, idDependencia]);
 
   return { meses, loading, error, refetch: fetchMeses };
 };
 
-// Hook para obtener dependencias por año y mes
-export const useDependenciasPorFiltros = (filters: { anio: string | null; mes: string | null }) => {
+// Hook para obtener dependencias filtradas (anio requerido, mes opcional)
+export const useDependenciasPorFiltros = (filters: { anio: string | null; mes?: string | null }) => {
   const [dependencias, setDependencias] = useState<Dependencia[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const fetchDependencias = async () => {
-    if (!filters.anio || !filters.mes) {
+    if (!filters.anio) {
       setDependencias([]);
       return;
     }
@@ -168,7 +168,7 @@ export const useDependenciasPorFiltros = (filters: { anio: string | null; mes: s
     try {
       const response = await apiEndpoints.getDependenciasPorFiltros({
         anio: filters.anio,
-        mes: filters.mes
+        mes: filters.mes || undefined
       }) as ApiResponse<{dependencias: Dependencia[]}>;
       console.log('✅ Dependencias response:', response);
       
@@ -197,7 +197,7 @@ export const useDependenciasPorFiltros = (filters: { anio: string | null; mes: s
 // Hook para obtener programas por filtros
 export const useProgramasPorFiltrosNuevo = (filters: { 
   anio: string | null; 
-  mes: string | null; 
+  mes?: string | null; 
   idDependencia: string | null;
 }) => {
   const [programas, setProgramas] = useState<Programa[]>([]);
@@ -205,7 +205,7 @@ export const useProgramasPorFiltrosNuevo = (filters: {
   const [error, setError] = useState<string | null>(null);
 
   const fetchProgramas = async () => {
-    if (!filters.anio || !filters.mes || !filters.idDependencia) {
+    if (!filters.anio || !filters.idDependencia) {
       setProgramas([]);
       return;
     }
@@ -217,7 +217,7 @@ export const useProgramasPorFiltrosNuevo = (filters: {
     try {
       const response = await apiEndpoints.getProgramasPorFiltros({
         anio: filters.anio,
-        mes: filters.mes,
+        mes: filters.mes || undefined,
         idDependencia: filters.idDependencia
       }) as ApiResponse<{programas: Programa[]}>;
       console.log('✅ Programas response:', response);
@@ -239,7 +239,7 @@ export const useProgramasPorFiltrosNuevo = (filters: {
 
   useEffect(() => {
     fetchProgramas();
-  }, [filters.anio, filters.mes, filters.idDependencia]);
+  }, [filters.anio, filters.idDependencia, filters.mes]);
 
   return { programas, loading, error, refetch: fetchProgramas };
 };
@@ -247,7 +247,7 @@ export const useProgramasPorFiltrosNuevo = (filters: {
 // Hook para obtener componentes por filtros (ACTUALIZADO - SIN SUBPROGRAMA)
 export const useComponentesPorFiltrosNuevo = (filters: { 
   anio: string | null; 
-  mes: string | null; 
+  mes?: string | null; 
   idDependencia: string | null;
   idPrograma: string | null;
 }) => {
@@ -256,7 +256,7 @@ export const useComponentesPorFiltrosNuevo = (filters: {
   const [error, setError] = useState<string | null>(null);
 
   const fetchComponentes = async () => {
-    if (!filters.anio || !filters.mes || !filters.idDependencia || !filters.idPrograma) {
+    if (!filters.anio || !filters.idDependencia || !filters.idPrograma) {
       setComponentes([]);
       return;
     }
@@ -268,7 +268,7 @@ export const useComponentesPorFiltrosNuevo = (filters: {
     try {
       const response = await apiEndpoints.getComponentesPorFiltros({
         anio: filters.anio,
-        mes: filters.mes,
+        mes: filters.mes || undefined,
         idDependencia: filters.idDependencia,
         idPrograma: filters.idPrograma
       }) as ApiResponse<{componentes: Componente[]}>;
@@ -291,7 +291,7 @@ export const useComponentesPorFiltrosNuevo = (filters: {
 
   useEffect(() => {
     fetchComponentes();
-  }, [filters.anio, filters.mes, filters.idDependencia, filters.idPrograma]);
+  }, [filters.anio, filters.idDependencia, filters.idPrograma, filters.mes]);
 
   return { componentes, loading, error, refetch: fetchComponentes };
 };
@@ -320,7 +320,7 @@ export const useBeneficiariosPorFiltrosNuevo = (filters: {
     }
 
     // Si no hay filtros mínimos, no hacer la consulta
-    if (!filters.anio || !filters.mes || !filters.idDependencia) {
+    if (!filters.anio || !filters.idDependencia) {
       setBeneficiarios([]);
       setEstadisticas(null);
       setMetadata(null);
@@ -337,7 +337,7 @@ export const useBeneficiariosPorFiltrosNuevo = (filters: {
     try {
       const response = await apiEndpoints.getBeneficiariosPorFiltros({
         anio: filters.anio!,
-        mes: filters.mes!,
+        mes: filters.mes || undefined,
         idDependencia: filters.idDependencia!,
         idPrograma: filters.idPrograma,
         idComponente: filters.idComponente
