@@ -23,7 +23,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import DownloadIcon from '@mui/icons-material/CloudDownload';
 import Pagination from '@mui/material/Pagination';
-import bannerImage from '../assets/banner1.png';
+import bannerImage from '../assets/banner1.jpg';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -91,7 +91,7 @@ const HomePage = () => {
   const emptyRows = page === totalPages && paginatedData.length > 0 ? rowsPerPage - paginatedData.length : 0;
 
   // Opción 2: Usar la ruta directamente (requiere que la carpeta 'assets' esté en 'public' o servida estáticamente)
-  const bannerImageUrl = "../assets/banner1.png";
+  const bannerImageUrl = "../assets/banner1.jpg";
 
   return (
       <Box sx={{ p: { xs: 1, sm: 2 } }}> {/* Responsive padding */}

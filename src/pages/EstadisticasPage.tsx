@@ -15,11 +15,11 @@ import Carousel from 'react-material-ui-carousel';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import bannerImage1 from '../assets/banner1.png';
-import bannerImage2 from '../assets/banner2.png';
+import bannerImage1 from '../assets/banner1.jpg';
+import bannerImage2 from '../assets/banner2.jpg';
 import bannerImage3 from '../assets/banner3.jpg';
 import bannerImage4 from '../assets/banner4.jpg';
-import bannerImage5 from '../assets/banner5.png';
+import bannerImage5 from '../assets/banner5.jpg';
 
 // Usamos assets locales procesados por el bundler
 const bannerImages = [bannerImage1, bannerImage2, bannerImage3, bannerImage4, bannerImage5];

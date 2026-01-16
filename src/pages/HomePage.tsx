@@ -39,11 +39,11 @@ import { apiClient } from '../services/api';
 import MUIXDataGrid from '../layout/MUIXDataGrid';
 
 // --- Banner Images (Demo Mode) ---
-import bannerImage1 from '../assets/banner1.png';
-import bannerImage2 from '../assets/banner2.png';
+import bannerImage1 from '../assets/banner1.jpg';
+import bannerImage2 from '../assets/banner2.jpg';
 import bannerImage3 from '../assets/banner3.jpg';
 import bannerImage4 from '../assets/banner4.jpg';
-import bannerImage5 from '../assets/banner5.png';
+import bannerImage5 from '../assets/banner5.jpg';
 
 const bannerImages = [bannerImage1, bannerImage2, bannerImage3, bannerImage4, bannerImage5];
 const BANNER_COUNT = bannerImages.length;
