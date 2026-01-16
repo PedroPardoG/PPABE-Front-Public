@@ -556,6 +556,7 @@ const HomePage: React.FC = () => {
                     const newDep = e.target.value;
                     setSelectedDependencia(newDep);
                     // Limpiar filtros dependientes
+                    setSelectedMes([]);
                     setSelectedPrograma('');
                     setSelectedComponente('');
                   }}
