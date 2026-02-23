@@ -9,10 +9,10 @@ import { AppContextProvider } from './context/AppContextProvider';
 import { ThemeProvider } from '@mui/material';
 import theme from './theme';
 
+const baseName = import.meta.env.BASE_URL.replace(/\/$/, ''); // "/ppabe"
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      {/* ThemeProvider se mantiene (paleta, etc). Baseline lo manejamos en index.css */}
+    <BrowserRouter basename={baseName}>
       <ThemeProvider theme={theme}>
         <AppContextProvider>
           <App />

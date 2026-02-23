@@ -2,8 +2,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
 export default defineConfig({
+  base: '/ppabe/',          // <-- CLAVE para desplegar en /ppabe/
   plugins: [react()],
   base: './ppabe/',
   server: {
@@ -15,7 +15,7 @@ export default defineConfig({
     setupFiles: './src/test/setupTests.ts',
     coverage: {
       provider: 'istanbul',
-      reporter: ['html', 'lcovonly', 'text']
-    }
-  }
+      reporter: ['html', 'lcovonly', 'text'],
+    },
+  },
 })
