@@ -3,9 +3,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  base: '/ppabe/',          // <-- CLAVE para desplegar en /ppabe/
+  base: '/padron-beneficiarios/',          // <-- CLAVE para desplegar en /ppabe/
   plugins: [react()],
-  base: './ppabe/',
   server: {
     port: 3010,
   },
