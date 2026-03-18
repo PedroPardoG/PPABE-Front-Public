@@ -31,8 +31,7 @@ import {
   useAniosDisponibles, 
   useMesesPorAnio, 
   useDependenciasPorFiltros, 
-  useProgramasPorFiltrosNuevo, 
-  useComponentesPorFiltrosNuevo,
+ 
   useBeneficiariosPorFiltrosNuevo 
 } from '../hooks/useApi';
 import { apiClient } from '../services/api';
@@ -219,8 +218,7 @@ const HomePage: React.FC = () => {
   const [selectedAnio, setSelectedAnio] = useState<string>('');
   const [selectedMes, setSelectedMes] = useState<string[]>([]); // Array para múltiples meses
   const [selectedDependencia, setSelectedDependencia] = useState<string>('');
-  const [selectedPrograma, setSelectedPrograma] = useState<string>(''); 
-  const [selectedComponente, setSelectedComponente] = useState<string>('');
+  
   const [searchTerm, setSearchTerm] = useState<string>('');
   
   // Estado para controlar cuándo se debe buscar (búsqueda manual)
@@ -236,17 +234,7 @@ const HomePage: React.FC = () => {
   const { dependencias, loading: loadingDependencias, error: errorDependencias } = useDependenciasPorFiltros({
     anio: selectedAnio || null
   });
-  const { programas, loading: loadingProgramas, error: errorProgramas } = useProgramasPorFiltrosNuevo({
-    anio: selectedAnio || null,
-    idDependencia: selectedDependencia || null,
-    mes: selectedMes.length > 0 ? selectedMes.join(',') : null
-  });
-  const { componentes, loading: loadingComponentes, error: errorComponentes } = useComponentesPorFiltrosNuevo({
-    anio: selectedAnio || null,
-    idDependencia: selectedDependencia || null,
-    idPrograma: selectedPrograma || null,
-    mes: selectedMes.length > 0 ? selectedMes.join(',') : null
-  });
+ 
   
   // Hook principal: Beneficiarios directos por filtros (SIMPLIFICADO - BÚSQUEDA MANUAL)
   const { 
@@ -260,8 +248,7 @@ const HomePage: React.FC = () => {
       anio: selectedAnio || null,
       mes: selectedMes.length > 0 ? selectedMes.join(',') : null,
       idDependencia: selectedDependencia || null,
-      idPrograma: selectedPrograma || undefined,
-      idComponente: selectedComponente || undefined
+      
     } : null
   );
 
@@ -339,8 +326,7 @@ const HomePage: React.FC = () => {
     setSelectedAnio('');
     setSelectedMes([]);
     setSelectedDependencia('');
-    setSelectedPrograma('');
-    setSelectedComponente('');
+    
     setSearchTerm('');
     setShouldSearch(false);
     setCaptchaToken(null);
@@ -498,25 +484,20 @@ const HomePage: React.FC = () => {
       </Box>
 
 
-      {/* Mostrar errores */}
-      {(errorAnios || errorMeses || errorDependencias || errorProgramas || errorComponentes || errorBeneficiarios) && (
-        <Alert severity="error" sx={{ mb: 2 }}>
-          {errorAnios || errorMeses || errorDependencias || errorProgramas || errorComponentes || errorBeneficiarios}
-        </Alert>
-      )}
+      
 
       {/* Filtros */}
       <Paper elevation={1} sx={{ bgcolor: '#f7f7f7', py: 3, px: { xs: 1, sm: 2, md: 3 }, mb: 4, borderRadius: '8px' }}>
-        <Typography variant="h3" component="h3" sx={{ mb: 2, fontWeight: 700 }}>
+        <Typography variant="h3" component="h3" sx={{ mb: 3, fontWeight: 700 }}>
           Filtros de Búsqueda
         </Typography>
         
         {/* Filtros - NUEVOS: Año y Dependencia obligatorios; Mes/Programa/Componente opcionales */}
         {!errorAnios && (
           <>
-            <Grid container spacing={2} alignItems="center">
+            <Grid container spacing={2} alignItems="center" justifyContent="center" sx={{ mt: 1 }}>
             {/* 1️⃣ Año - Siempre disponible (OBLIGATORIO) */}
-            <Grid item xs={12} sm={6} md={2}>
+            <Grid item xs={12} sm={6} md={3}>
               <FormControl fullWidth variant="outlined" size="small" required>
                 <InputLabel id="ano-label">Año *</InputLabel>
                 <Select
@@ -529,8 +510,7 @@ const HomePage: React.FC = () => {
                     // Limpiar filtros dependientes
                     setSelectedDependencia('');
                     setSelectedMes([]);
-                    setSelectedPrograma('');
-                    setSelectedComponente('');
+                   
                   }}
                   sx={{ bgcolor: 'white', borderRadius: '4px' }}
                   disabled={loadingAnios || shouldSearch}
@@ -545,7 +525,7 @@ const HomePage: React.FC = () => {
             </Grid>
 
             {/* 2️⃣ Dependencia - Solo disponible si hay año (OBLIGATORIO) */}
-            <Grid item xs={12} sm={6} md={2}>
+            <Grid item xs={12} sm={6} md={3}>
               <FormControl fullWidth variant="outlined" size="small" required>
                 <InputLabel id="dependencia-label">Dependencia *</InputLabel>
                 <Select
@@ -557,8 +537,7 @@ const HomePage: React.FC = () => {
                     setSelectedDependencia(newDep);
                     // Limpiar filtros dependientes
                     setSelectedMes([]);
-                    setSelectedPrograma('');
-                    setSelectedComponente('');
+                    
                   }}
                   sx={{ bgcolor: 'white', borderRadius: '4px' }}
                   disabled={!selectedAnio || loadingDependencias || shouldSearch}
@@ -573,7 +552,7 @@ const HomePage: React.FC = () => {
             </Grid>
 
             {/* 3️⃣ Mes - Opcional, disponible si hay Año y Dependencia */}
-            <Grid item xs={12} sm={6} md={2}>
+            <Grid item xs={12} sm={6} md={3}>
               <FormControl fullWidth variant="outlined" size="small">
                 <InputLabel id="mes-label">Mes(es)</InputLabel>
                 <Select
@@ -584,9 +563,7 @@ const HomePage: React.FC = () => {
                   onChange={(e) => {
                     const value = e.target.value;
                     setSelectedMes(typeof value === 'string' ? value.split(',') : value as string[]);
-                    // Limpiar filtros dependientes
-                    setSelectedPrograma('');
-                    setSelectedComponente('');
+                   
                   }}
                   renderValue={(selected) => 
                     (selected as string[])
@@ -610,116 +587,73 @@ const HomePage: React.FC = () => {
                 </Select>
               </FormControl>
             </Grid>
-
-            {/* 4️⃣ Programa - Solo disponible si hay filtros mínimos (OPCIONAL) */}
-            <Grid item xs={12} sm={6} md={3}>
-              <FormControl fullWidth variant="outlined" size="small">
-                <InputLabel id="programa-label">Programa</InputLabel>
-                <Select
-                  labelId="programa-label"
-                  value={selectedPrograma}
-                  label="Programa"
-                  onChange={(e) => {
-                    const newProg = e.target.value;
-                    setSelectedPrograma(newProg);
-                    // Limpiar componente al cambiar programa
-                    setSelectedComponente('');
-                  }}
-                  sx={{ bgcolor: 'white', borderRadius: '4px' }}
-                  disabled={!selectedAnio || !selectedDependencia || loadingProgramas}
-                >
-                  {programas?.map((prog) => (
-                    <MenuItem key={prog.id} value={prog.id}>
-                      {prog.nombre}
-                    </MenuItem>
-                  )) || []}
-                </Select>
-              </FormControl>
-            </Grid>
-
-            {/* 5️⃣ Componente - Solo disponible si hay programa (OPCIONAL) */}
-            <Grid item xs={12} sm={6} md={3}>
-              <FormControl fullWidth variant="outlined" size="small">
-                <InputLabel id="componente-label">Componente</InputLabel>
-                <Select
-                  labelId="componente-label"
-                  value={selectedComponente}
-                  label="Componente"
-                  onChange={(e) => setSelectedComponente(e.target.value)}
-                  sx={{ bgcolor: 'white', borderRadius: '4px' }}
-                  disabled={!selectedPrograma || loadingComponentes}
-                >
-                  {componentes?.map((comp) => (
-                    <MenuItem key={comp.id} value={comp.id}>
-                      {comp.nombre}
-                    </MenuItem>
-                  )) || []}
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-
-            {/* hCaptcha - Solo mostrar si hay filtros mínimos seleccionados */}
+            {/* Fila de captcha - centrado, debajo de los selectores */}
             {selectedAnio && selectedDependencia && (
-              <Box sx={{ mt: 3 }}>
-                <HCaptchaWrapper
-                  ref={captchaRef}
-                  onVerify={handleCaptchaVerify}
-                  onExpire={handleCaptchaExpire}
-                  onError={handleCaptchaError}
-                />
+              <Grid item xs={12} sx={{ mt: 2 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <HCaptchaWrapper
+                    ref={captchaRef}
+                    onVerify={handleCaptchaVerify}
+                    onExpire={handleCaptchaExpire}
+                    onError={handleCaptchaError}
+                  />
+                </Box>
                 {captchaError && (
                   <Alert severity="error" sx={{ mt: 2, mx: 'auto', maxWidth: '500px' }}>
                     {captchaError}
                   </Alert>
                 )}
-              </Box>
+              </Grid>
             )}
 
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2, mt: 3, pt: 1 }}>
-              {/* Botón Buscar - Solo habilitado si hay filtros mínimos Y captcha verificado */}
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<SearchIcon />}
-                onClick={handleSearch}
-                disabled={!selectedAnio || !selectedDependencia || !captchaToken || loadingBeneficiarios}
-                sx={{ 
-                  bgcolor: '#FF6B35',
-                  color: 'white', 
-                  borderRadius: '20px', 
-                  px: 4, 
-                  py: 1, 
-                  textTransform: 'none', 
-                  fontWeight: 'bold',
-                  '&:hover': { bgcolor: '#FF8C5A' },
-                  '&.Mui-disabled': { bgcolor: '#ccc', color: '#666' }
-                }}
-              >
-                Buscar
-              </Button>
-              
-              {/* Botón Limpiar Filtros - Solo mostrar si hay algún filtro seleccionado */}
-              {(selectedAnio || selectedMes.length > 0 || selectedDependencia || selectedPrograma || selectedComponente || searchTerm) && (
+            {/* Fila de botones - siempre debajo del captcha (cuando exista) */}
+            <Grid item xs={12} sx={{ mt: 2 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
+                {/* Botón Buscar - Solo habilitado si hay filtros mínimos Y captcha verificado */}
                 <Button
-                  variant="outlined"
-                  onClick={handleClearFilters}
-                  disabled={loadingBeneficiarios || loadingAnios}
+                  variant="contained"
+                  color="primary"
+                  startIcon={<SearchIcon />}
+                  onClick={handleSearch}
+                  disabled={!selectedAnio || !selectedDependencia || !captchaToken || loadingBeneficiarios}
                   sx={{ 
-                    borderColor: '#FF6B35',
-                    color: '#FF6B35',
+                    bgcolor: '#FF6B35',
+                    color: 'white', 
                     borderRadius: '20px', 
                     px: 4, 
                     py: 1, 
                     textTransform: 'none', 
                     fontWeight: 'bold',
-                    '&:hover': { borderColor: '#FF8C5A', bgcolor: 'rgba(255, 107, 53, 0.05)' }
+                    '&:hover': { bgcolor: '#FF8C5A' },
+                    '&.Mui-disabled': { bgcolor: '#ccc', color: '#666' }
                   }}
                 >
-                  Limpiar Filtros
+                  Buscar
                 </Button>
-              )}
-            </Box>
+
+                {/* Botón Limpiar Filtros - Solo mostrar si hay algún filtro seleccionado */}
+                {(selectedAnio || selectedMes.length > 0 || selectedDependencia || searchTerm) && (
+                  <Button
+                    variant="outlined"
+                    onClick={handleClearFilters}
+                    disabled={loadingBeneficiarios || loadingAnios}
+                    sx={{ 
+                      borderColor: '#FF6B35',
+                      color: '#FF6B35',
+                      borderRadius: '20px', 
+                      px: 4, 
+                      py: 1, 
+                      textTransform: 'none', 
+                      fontWeight: 'bold',
+                      '&:hover': { borderColor: '#FF8C5A', bgcolor: 'rgba(255, 107, 53, 0.05)' }
+                    }}
+                  >
+                    Limpiar Filtros
+                  </Button>
+                )}
+              </Box>
+            </Grid>
+            </Grid>
           </>
         )}
       </Paper>

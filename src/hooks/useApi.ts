@@ -78,22 +78,18 @@ export const useAniosDisponibles = () => {
   const [error, setError] = useState<string | null>(null);
 
   const fetchAnios = async () => {
-    console.log('📅 Fetching años disponibles...');
     setLoading(true);
     setError(null);
     
     try {
       const response = await apiEndpoints.getAniosDisponibles() as ApiResponse<{anios: number[]}>;
-      console.log('✅ Años response:', response);
       
       if (response.success && response.data) {
         setAnios(response.data.anios || []);
-        console.log('✅ Años data extracted:', response.data.anios);
       } else {
         throw new Error(response.message || 'Error al obtener años');
       }
     } catch (err) {
-      console.error('❌ Error fetching años:', err);
       setError(handleApiError(err));
     } finally {
       setLoading(false);
@@ -119,22 +115,18 @@ export const useMesesPorAnio = (anio: string | null, idDependencia?: string | nu
       return;
     }
 
-    console.log('📆 Fetching meses for año:', anio, 'dependencia:', idDependencia);
     setLoading(true);
     setError(null);
     
     try {
       const response = await apiEndpoints.getMesesPorAnio(anio, idDependencia || null) as ApiResponse<{meses: number[]}>;
-      console.log('✅ Meses response:', response);
       
       if (response.success && response.data) {
         setMeses(response.data.meses || []);
-        console.log('✅ Meses data extracted:', response.data.meses);
       } else {
         setMeses([]);
       }
     } catch (err) {
-      console.error('❌ Error fetching meses:', err);
       setError(handleApiError(err));
       setMeses([]);
     } finally {
@@ -161,7 +153,6 @@ export const useDependenciasPorFiltros = (filters: { anio: string | null; mes?: 
       return;
     }
 
-    console.log('🏢 Fetching dependencias for filters:', filters);
     setLoading(true);
     setError(null);
     
@@ -170,16 +161,12 @@ export const useDependenciasPorFiltros = (filters: { anio: string | null; mes?: 
         anio: filters.anio,
         mes: filters.mes || undefined
       }) as ApiResponse<{dependencias: Dependencia[]}>;
-      console.log('✅ Dependencias response:', response);
-      
       if (response.success && response.data) {
         setDependencias(response.data.dependencias || []);
-        console.log('✅ Dependencias data extracted:', response.data.dependencias);
       } else {
         setDependencias([]);
       }
     } catch (err) {
-      console.error('❌ Error fetching dependencias:', err);
       setError(handleApiError(err));
       setDependencias([]);
     } finally {
@@ -210,7 +197,6 @@ export const useProgramasPorFiltrosNuevo = (filters: {
       return;
     }
 
-    console.log('📊 Fetching programas for filters:', filters);
     setLoading(true);
     setError(null);
     
@@ -220,16 +206,12 @@ export const useProgramasPorFiltrosNuevo = (filters: {
         mes: filters.mes || undefined,
         idDependencia: filters.idDependencia
       }) as ApiResponse<{programas: Programa[]}>;
-      console.log('✅ Programas response:', response);
-      
       if (response.success && response.data) {
         setProgramas(response.data.programas || []);
-        console.log('✅ Programas data extracted:', response.data.programas);
       } else {
         setProgramas([]);
       }
     } catch (err) {
-      console.error('❌ Error fetching programas:', err);
       setError(handleApiError(err));
       setProgramas([]);
     } finally {
@@ -261,7 +243,6 @@ export const useComponentesPorFiltrosNuevo = (filters: {
       return;
     }
 
-    console.log('🧩 Fetching componentes for filters:', filters);
     setLoading(true);
     setError(null);
     
@@ -272,16 +253,12 @@ export const useComponentesPorFiltrosNuevo = (filters: {
         idDependencia: filters.idDependencia,
         idPrograma: filters.idPrograma
       }) as ApiResponse<{componentes: Componente[]}>;
-      console.log('✅ Componentes response:', response);
-      
       if (response.success && response.data) {
         setComponentes(response.data.componentes || []);
-        console.log('✅ Componentes data extracted:', response.data.componentes);
       } else {
         setComponentes([]);
       }
     } catch (err) {
-      console.error('❌ Error fetching componentes:', err);
       setError(handleApiError(err));
       setComponentes([]);
     } finally {
@@ -327,7 +304,6 @@ export const useBeneficiariosPorFiltrosNuevo = (filters: {
       return;
     }
 
-    console.log('👥 Fetching beneficiarios con filtros nuevos:', filters);
     setLoading(true);
     setError(null);
     
@@ -343,18 +319,14 @@ export const useBeneficiariosPorFiltrosNuevo = (filters: {
         idComponente: filters.idComponente
       }) as ApiResponse<BeneficiarioCompleto[]>;
       
-      console.log('✅ Beneficiarios response:', response);
-      
       if (response.success && response.data) {
         setBeneficiarios(Array.isArray(response.data) ? response.data : []);
         setEstadisticas(response.metadata?.estadisticas || null);
         setMetadata(response.metadata || null);
-        console.log('✅ Beneficiarios cargados:', Array.isArray(response.data) ? response.data.length : 0);
       } else {
         throw new Error(response.message || 'Error al obtener beneficiarios');
       }
     } catch (err) {
-      console.error('❌ Error fetching beneficiarios:', err);
       setError(handleApiError(err));
       setBeneficiarios([]);
       setEstadisticas(null);
