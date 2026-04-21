@@ -289,7 +289,6 @@ const HomePage: React.FC = () => {
 
   const handleCaptchaExpire = () => {
     setCaptchaToken(null);
-    setCaptchaError('El captcha ha expirado. Por favor, verifica nuevamente.');
   };
 
   const handleCaptchaError = (error: string) => {

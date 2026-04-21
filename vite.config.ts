@@ -6,7 +6,7 @@ export default defineConfig({
   base: '/padron-beneficiarios/',          // <-- CLAVE para desplegar en /ppabe/
   plugins: [react()],
   server: {
-    port: 3010,
+    port: 3011,
   },
   test: {
     globals: true,
